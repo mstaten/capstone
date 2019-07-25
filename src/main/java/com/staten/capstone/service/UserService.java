@@ -1,5 +1,6 @@
 package com.staten.capstone.service;
 
+import com.staten.capstone.PasswordsMismatchException;
 import com.staten.capstone.UserAlreadyExistsException;
 import com.staten.capstone.models.Role;
 import com.staten.capstone.models.User;
@@ -14,6 +15,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to register users and add to database
+ */
 @Service
 @Transactional
 public class UserService implements IUserService {
@@ -27,14 +31,27 @@ public class UserService implements IUserService {
     @Autowired
     private RoleDao roleDao;
 
+    /**
+     * Register new user
+     *
+     * @param userDto
+     * @return user
+     * @throws UserAlreadyExistsException
+     */
     @Override
-    public User registerNewUser(UserDto userDto) throws UserAlreadyExistsException {
+    public User registerNewUser(UserDto userDto) throws UserAlreadyExistsException, PasswordsMismatchException {
 
         if (usernameExists(userDto.getUsername())) {
             // if username already exists
             String username = userDto.getUsername();
             userDto.setUsername(""); // reset username to empty string
             throw new UserAlreadyExistsException("There is already an account with this username: " + username);
+        }
+
+        // check if password and verify string match
+        if (!verifyNewUserPasswords(userDto.getPassword(), userDto.getVerify())) {
+            // if don't match, return error
+            throw new PasswordsMismatchException("Passwords don't match");
         }
 
         // create new user w/given fields
@@ -50,12 +67,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUserByUsername(String username) {
+    public User findUserByUsername(final String username) {
         return userDao.findByUsername(username);
     }
 
     @Override
-    public User findUserById(Integer id) {
+    public User findUserById(final Integer id) {
         return userDao.findOne(id);
     }
 
@@ -68,6 +85,11 @@ public class UserService implements IUserService {
     public void changeUserPassword(User user, String password) {
         user.setPassword(passwordEncoder.encode(password));
         userDao.save(user);
+    }
+
+    @Override
+    public Boolean verifyNewUserPasswords(final String password, final String verify) {
+        return (password.equals(verify));
     }
 
     // getUser

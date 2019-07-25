@@ -1,5 +1,6 @@
 package com.staten.capstone.controllers;
 
+import com.staten.capstone.PasswordsMismatchException;
 import com.staten.capstone.UserAlreadyExistsException;
 import com.staten.capstone.models.User;
 import com.staten.capstone.models.data.UserDao;
@@ -50,12 +51,12 @@ public class RegistrationController {
         try {
             // might throw UserAlreadyExistsException
             user = userService.registerNewUser(userDto);
-        } catch (UserAlreadyExistsException ex) {
+        } catch (UserAlreadyExistsException | PasswordsMismatchException ex) {
 
             // display register form again with this error
             model.addAttribute("title", "Register New User");
             model.addAttribute("ex", ex);
-            return "user/add";
+            return "user/register";
         }
 
         // save user
