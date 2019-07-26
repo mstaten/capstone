@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /** using Java configuration **/
 
@@ -108,15 +109,17 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAuthenticationFailureHandler();
     }
 
+    }
+*/
+
     @Bean
     public SpringSecurityDialect springSecurityDialect() {
         return new SpringSecurityDialect();
     }
-*/
 
-    /** first step in enabling concurrent session-control support :
-     *  Bean is essential to make sure Spring Security Session registry
-     *  is notified when the session is destroyed */
+        /** first step in enabling concurrent session-control support :
+         *  Bean is essential to make sure Spring Security Session registry
+         *  is notified when the session is destroyed */
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();

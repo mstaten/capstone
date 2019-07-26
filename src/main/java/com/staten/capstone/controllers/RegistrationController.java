@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class RegistrationController {
@@ -26,7 +27,11 @@ public class RegistrationController {
     private IUserService userService;
 
     @GetMapping(value = "register")
-    public String register(Model model) {
+    public String register(Model model, Principal principal) {
+        // if already logged in, redirect to home
+        if (principal != null) {
+            return "redirect:/";
+        }
         model.addAttribute("title", "Register New User");
         model.addAttribute(new UserDto());
         return "user/register";
