@@ -1,4 +1,4 @@
-package com.staten.capstone;
+package com.staten.capstone.errors;
 
 public class UserAlreadyExistsException extends Exception {
 

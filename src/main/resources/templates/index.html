@@ -2,6 +2,27 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
+<div class="wrapper">
 
+    <div class="nav-bar">
+        <div th:replace="fragments :: navbar"></div>
+    </div>
+
+    <span class="image2">
+            <img th:src="@{/images/trashedbuilding.jpeg}" alt="trashed building" />
+    </span>
+
+    <div class="images">
+        <span class="image1">
+            <img th:src="@{/images/stopsign.jpeg}" alt="stop sign" />
+        </span>
+    </div>
+
+    <div class="side-bar">Side bar</div>
+
+    <div class="footer">Fooooooter</div>
+</div>
+
+<span th:replace="fragments :: script"></span>
 </body>
 </html>

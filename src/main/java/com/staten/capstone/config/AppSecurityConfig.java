@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 /** using Java configuration **/
 
@@ -39,20 +41,20 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/register").permitAll()
+                    .antMatchers("/", "/static/**", "/images/**", "/css/**", "/register").permitAll()
                     //.antMatchers("/admin/**").hasRole("ADMIN")
                     //.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                    //.loginPage("/login")
+                    .loginPage("/login")
                         .defaultSuccessUrl("/")
                         //.failureHandler(customAuthenticationHandler())
-                        //.failureUrl("/user/login/error")
+                        .failureUrl("/login/error")
                         .permitAll()
                     .and()
                 .logout()
-                    .logoutUrl("/user/logout")
+                    .logoutUrl("/logout")
                     //.logoutSuccessUrl("/login")
                     .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)

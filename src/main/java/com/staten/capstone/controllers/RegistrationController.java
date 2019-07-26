@@ -1,7 +1,7 @@
 package com.staten.capstone.controllers;
 
-import com.staten.capstone.PasswordsMismatchException;
-import com.staten.capstone.UserAlreadyExistsException;
+import com.staten.capstone.errors.PasswordsMismatchException;
+import com.staten.capstone.errors.UserAlreadyExistsException;
 import com.staten.capstone.models.User;
 import com.staten.capstone.models.data.UserDao;
 import com.staten.capstone.models.data.UserDto;
