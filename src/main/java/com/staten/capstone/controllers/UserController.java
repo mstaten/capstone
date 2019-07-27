@@ -50,4 +50,17 @@ public class UserController {
         model.addAttribute("title", "Unauthorized");
         return "user/unauthorized";
     }
+
+
+    @GetMapping(value = "invalidSession")
+    public String invalidSession(Model model) {
+        model.addAttribute("title", "Invalid Session");
+        return "user/invalidSession";
+    }
+
+    @GetMapping(value = "expiredSession")
+    public String expiredSession(Model model) {
+        model.addAttribute("title", "Expired Session");
+        return "user/expiredSession";
+    }
 }

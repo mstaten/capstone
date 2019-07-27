@@ -73,9 +73,9 @@ img {
     border-radius: 5px;
 }*/
 
-.register-form, .login-form, .unauth, .account {
+.register-form, .login-form, .general, .account {
     margin: 15px 60px;
-        text-decoration: none;
+    text-decoration: none;
 
     /*max-width: 700px;*/
 }

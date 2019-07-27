@@ -62,11 +62,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .and()
                 .sessionManagement()
-                    .invalidSessionUrl("/user/invalidSession")
+                    .invalidSessionUrl("/invalidSession")
                     .sessionFixation().migrateSession()
                     .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .maximumSessions(2)
-                    .expiredUrl("/user/expiredSession")
+                    .expiredUrl("/expiredSession")
         ;
 
         // .addLogoutHandler(logoutHandler)
