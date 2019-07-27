@@ -11,60 +11,97 @@
 
     <title th:text="${title}">My Cheeses</title>
 </head>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <span>
-        <button class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarLight"
-                aria-controls="navbarLight"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a href="#" class="navbar-brand lr-logo">LR</a>
-    </span>
-    <a class="navbar-brand" href="/">Local Reports</a>
-
-    <div class="navbar-collapse collapse show" id="navbarLight" style="">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    Map
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Submit Report</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a sec:authorize="!isAuthenticated()" href="/login" class="nav-link">Login</a>
-                <a sec:authorize="isAuthenticated()" href="/logout" class="nav-link">Logout
-                    <form th:action="@{/user/logout}" method="post" th:hidden="true" >
-                        <input type="submit" value="Logout" />
-                    </form>
-                </a>
-            </li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link register-btn" href="/register">Register</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div th:fragment="auth">
-    <div sec:authorize="!isAuthenticated()">Text for non-authenticated users.</div>
-    <div sec:authorize="isAuthenticated()">Text for authenticated users.</div>
-</div>
 
 <body>
-<div th:fragment="script">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-</div>
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+        <span>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarLight"
+                    aria-controls="navbarLight"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="#" class="navbar-brand lr-logo">LR</a>
+        </span>
+        <a class="navbar-brand" href="/">Local Reports</a>
+
+        <div class="navbar-collapse collapse show" id="navbarLight" style="">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Map
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Submit Report</a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="!isAuthenticated()" href="/login" class="nav-link">Login</a>
+                    <a sec:authorize="isAuthenticated()" href="/logout" class="nav-link">Logout
+                        <form th:action="@{/user/logout}" method="post" th:hidden="true" >
+                            <input type="submit" value="Logout" />
+                        </form>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="isAuthenticated()" class="nav-link register-btn"
+                       th:href="'/account/' + ${#authentication.getPrincipal().getId()}"
+                       sec:authentication="name">username</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+
+    <div th:fragment="user-info" sec:authorize="isAuthenticated()" class="user-info">
+        <!-- User-Info Popover -->
+        <a class="btn btn-warning" data-placement="top"
+           data-popover-content="#a1" data-toggle="popover"
+           data-trigger="focus" href="#"
+           sec:authentication="name">username</a>
+
+        <!-- Content for User-Info Popover -->
+        <div class="hidden" id="a1">
+            <div class="popover-heading" hidden="true">
+                <a th:href="'/account/' + ${#authentication.getPrincipal().getId()}">My Account</a>
+            </div>
+
+            <div class="popover-body" hidden="true">
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="auth">
+        <div sec:authorize="!isAuthenticated()">Text for non-authenticated users.</div>
+        <div sec:authorize="isAuthenticated()">Text for authenticated users.</div>
+    </div>
+
+    <div th:fragment="script">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+        <script> <!-- JS for User-Info Popover -->
+            $(document).ready(function(){
+                $("[data-toggle=popover]").popover({
+                    html : true,
+                    content: function() {
+                      var content = $(this).attr("data-popover-content");
+                      return $(content).children(".popover-body").html();
+                    },
+                    title: function() {
+                      var title = $(this).attr("data-popover-content");
+                      return $(title).children(".popover-heading").html();
+                    }
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>

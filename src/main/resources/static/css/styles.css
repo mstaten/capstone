@@ -20,6 +20,9 @@
                             "footer footer  footer  footer  footer  footer";
 }
 
+.user-info {
+}
+
 .images {
     grid-area: 2 / 2 / span 4 / span 2;
 }
@@ -57,13 +60,23 @@ img {
     grid-area: footer;
 }
 
+.register {
+    margin-top: 10px;
+}
+
+.orange {
+    color: #ff9933;
+}
+
 /*.page, .side-bar, .footer {
     border: 2px solid #f76707;
     border-radius: 5px;
 }*/
 
-.register-form, .login-form {
-    margin: 0 60px;
+.register-form, .login-form, .unauth, .account {
+    margin: 15px 60px;
+        text-decoration: none;
+
     /*max-width: 700px;*/
 }
 
