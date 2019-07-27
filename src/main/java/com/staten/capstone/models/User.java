@@ -12,7 +12,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotNull
     @Size(min=4, max=15, message = "Username must be between 4 and 15 characters")
@@ -37,7 +37,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
