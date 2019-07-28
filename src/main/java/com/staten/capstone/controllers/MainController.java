@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -59,7 +61,7 @@ public class MainController {
     }
 
     @GetMapping(value = "report/{id}")
-    public String displayReport(Model model, @PathVariable int id) {
+    public String displayReport(@PathVariable int id, Model model) {
         Report report = reportDao.findById(id);
         model.addAttribute("title", report.getTitle());
         model.addAttribute("report", report);
@@ -71,6 +73,26 @@ public class MainController {
         // view all reports
         model.addAttribute("title", "All Reports");
         model.addAttribute("reportList", reportDao.findAll());
+        return "/reportList";
+    }
+
+    // view reports by specific user
+    @GetMapping(value = "report/list/{username}")
+    public String displayReportListByUser(@PathVariable String username,
+                                          Model model) {
+
+        int userId = userDao.findByUsername(username).getId();
+
+        // get reports by user
+        List<Report> reports = new ArrayList<>();
+        for (Report report : reportDao.findAll()) {
+            if (report.getUser().getId() == userId) {
+                reports.add(report);
+            }
+        }
+
+        model.addAttribute("title", "All Reports by " + username);
+        model.addAttribute("reportList", reports);
         return "/reportList";
     }
 

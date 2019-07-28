@@ -12,15 +12,22 @@
         <h1 th:text="${title}">Default Title</h1>
 
         <div>
-            <h5>Username:
+            <h3><small class="text-muted">Username:</small>
                 <span sec:authentication="name">username</span>
-            </h5>
+            </h3>
 
-            <a href="/logout" class="">Logout
-                <form th:action="@{/user/logout}" method="post" th:hidden="true" >
-                    <input type="submit" value="Logout" />
-                </form>
-            </a>
+            <div class="my-link">
+                    <a th:href="@{'/report/list/' + ${#authentication.getPrincipal().getUsername()}}" class="text-warning">View My Reports</a>
+            </div>
+
+            <div class="my-link">
+                <a href="/logout" class="text-danger" >Logout
+                    <form th:action="@{/user/logout}" method="post" th:hidden="true"  >
+                        <input type="submit" value="Logout"/>
+                    </form>
+                </a>
+            </div>
+
         </div>
     </div>
 

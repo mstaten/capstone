@@ -83,6 +83,11 @@ img {
     margin-top: 10px;
 }
 
+.my-link {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
 .orange {
     color: #ff9933;
 }
