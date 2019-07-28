@@ -73,7 +73,7 @@ img {
     border-radius: 5px;
 }*/
 
-.register-form, .login-form, .general, .account {
+.register-form, .login-form, .general, .account, .report {
     margin: 15px 60px;
     text-decoration: none;
 

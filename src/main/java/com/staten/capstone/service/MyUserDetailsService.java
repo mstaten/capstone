@@ -63,8 +63,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> getGrantedAuthorities(final List<String> privileges) {
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        for (final String privelege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privelege));
+        for (final String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority(privilege));
         }
         return authorities;
     }

@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /** using Java configuration **/
@@ -70,7 +68,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
 
         // .addLogoutHandler(logoutHandler)
-        // .deleteCookies(cookieNamesToClear)
     }
 
     @Override

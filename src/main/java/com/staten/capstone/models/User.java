@@ -25,10 +25,13 @@ public class User implements Serializable {
     private String verify;
 
     @ManyToMany(fetch = FetchType.EAGER)
-
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Collection<Report> reports;
 
     public User() {}
 
@@ -79,6 +82,14 @@ public class User implements Serializable {
         if (!password.equals(verify) && verify!=null) {
             setVerify(null);
         }
+    }
+
+    public Collection<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(Collection<Report> reports) {
+        this.reports = reports;
     }
 
     @Override
