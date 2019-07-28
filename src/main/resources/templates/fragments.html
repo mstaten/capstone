@@ -24,9 +24,9 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="#" class="navbar-brand lr-logo">LR</a>
+            <a href="/" class="navbar-brand lr-logo">LR</a>
         </span>
-        <a class="navbar-brand" href="/">Local Reports</a>
+        <a class="navbar-brand" href="/reportList">Local Reports</a>
 
         <div class="navbar-collapse collapse show" id="navbarLight" style="">
             <ul class="navbar-nav mr-auto">
@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <div th:fragment="auth">
+    <div th:fragment="auth" class="general">
         <div sec:authorize="!isAuthenticated()">Text for non-authenticated users.</div>
         <div sec:authorize="isAuthenticated()">Text for authenticated users.</div>
     </div>

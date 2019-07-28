@@ -55,7 +55,7 @@ public class MainController {
         reportDao.save(report);
 
         // eventually will want to redirect to map now displaying this user report
-        return "redirect:/";
+        return "redirect:/report/list";
     }
 
     @GetMapping(value = "report/{id}")
@@ -65,5 +65,14 @@ public class MainController {
         model.addAttribute("report", report);
         return "viewReport";
     }
+
+    @GetMapping(value = "report/list")
+    public String displayReportList(Model model) {
+        // view all reports
+        model.addAttribute("title", "All Reports");
+        model.addAttribute("reportList", reportDao.findAll());
+        return "/reportList";
+    }
+
 
 }
