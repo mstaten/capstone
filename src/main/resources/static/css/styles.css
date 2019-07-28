@@ -47,8 +47,19 @@ img {
     grid-area: nav;
 }
 
+.title {
+    text-align: center;
+}
+
 .page {
     grid-area: page;
+}
+
+.page-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
 }
 
 .side-bar {
