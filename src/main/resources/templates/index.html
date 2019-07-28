@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body>
-<div class="wrapper">
+<body class="wrapper">
 
     <div class="nav-bar">
         <div th:replace="fragments :: navbar"></div>
@@ -21,11 +20,10 @@
         Side bar
     </div>
 
+    <span th:replace="fragments :: auth"></span>
+
     <div class="footer">Fooooooter</div>
-</div>
 
-<span th:replace="fragments :: auth"></span>
-
-<span th:replace="fragments :: script"></span>
 </body>
+<span th:replace="fragments :: script"></span>
 </html>

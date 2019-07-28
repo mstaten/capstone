@@ -15,12 +15,38 @@
     grid-auto-columns: repeat(6, 1fr);
     grid-auto-rows: 1fr 3fr 3fr 1fr;
     grid-template-areas:    "nav    nav     nav     nav     nav     nav"
-                            "page   page    page    page    page    page"
-                            "page   page    page    page    page    page"
+                            "main   main    main    main    main    main"
+                            "main   main    main    main    main    main"
                             "footer footer  footer  footer  footer  footer";
 }
 
-.user-info {
+/* grid areas */
+.nav-bar {
+    grid-area: nav;
+}
+
+.main {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+/* sub grid areas on some pages */
+.contents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.side-bar {
+    grid-area: 2 / 5 / span 2 / span 2;
+    min-width: 300px;
+}
+
+.report {
+    margin: 20px;
 }
 
 .images {
@@ -43,35 +69,17 @@ img {
     max-width: 500px;
     height: auto;
 }
-.nav-bar {
-    grid-area: nav;
+
+
+.center {
+    text-align: center;
 }
 
 .title {
     text-align: center;
 }
 
-.page {
-    grid-area: page;
-}
-
-.page-items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
-}
-
-.side-bar {
-    grid-area: 2 / 5 / span 2 / span 2;
-    min-width: 300px;
-}
-
-.footer {
-    grid-area: footer;
-}
-
-.register {
+.register-link {
     margin-top: 10px;
 }
 
@@ -79,12 +87,12 @@ img {
     color: #ff9933;
 }
 
-/*.page, .side-bar, .footer {
+/*.main, .side-bar, .footer {
     border: 2px solid #f76707;
     border-radius: 5px;
 }*/
 
-.register-form, .login-form, .general, .account, .report {
+.general {
     margin: 15px 60px;
     text-decoration: none;
 

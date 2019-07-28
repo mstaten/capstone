@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body>
-<div class="wrapper">
+
+<body class="wrapper">
 
     <div class="nav-bar">
         <div th:replace="fragments :: navbar"></div>
     </div>
 
-    <div class="page report">
+    <div class="main general">
 
-        <h1 th:text="${title}">Default Title</h1>
+        <h1 th:text="${title}" class="center">Default Title</h1>
 
-        <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
+        <div class="contents">
 
-        <form method="post" th:object="${report}">
-            <fieldset>
-                <div class="form-group">
-                    <label for="report-title">Report Title</label>
-                    <input th:field="*{title}" type="text" class="form-control" id="report-title" placeholder="Report title" />
-                    <div th:errors="*{title}" class="invalid-feedback error"></div>
-                </div>
+            <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
 
-                <div class="form-group">
-                    <label for="description">Report Description</label>
-                    <textarea th:field="*{description}" type="text" class="form-control" id="description" placeholder="Enter report description"></textarea>
-                    <div th:errors="*{description}" class="invalid-feedback error"></div>
-                </div>
+            <form method="post" th:object="${report}">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="report-title">Report Title</label>
+                        <input th:field="*{title}" type="text" class="form-control" id="report-title" placeholder="Report title" />
+                        <div th:errors="*{title}" class="invalid-feedback error"></div>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Submit Report</button>
-            </fieldset>
-        </form>
+                    <div class="form-group">
+                        <label for="description">Report Description</label>
+                        <textarea th:field="*{description}" type="text" class="form-control" id="description" placeholder="Enter report description"></textarea>
+                        <div th:errors="*{description}" class="invalid-feedback error"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </fieldset>
+            </form>
+
+        </div>
+
     </div>
 
-    <div class="footer">Fooooooter</div>
-</div>
+    <span th:replace="fragments :: auth"></span>
 
-<span th:replace="fragments :: auth"></span>
-
-<span th:replace="fragments :: script"></span>
 </body>
+<span th:replace="fragments :: script"></span>
 </html>

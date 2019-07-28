@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
 <body class="wrapper">
 
     <div class="nav-bar">
         <div th:replace="fragments :: navbar"></div>
     </div>
 
-    <div class="page general">
+    <div class="main general">
 
-        <h1 th:text="${title}" class="title">Default Title</h1>
+        <h1 th:text="${title}" class="center">Default Title</h1>
 
-        <div class="page-items">
-            <div th:each="report : ${reportList}" class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="contents">
+            <div th:each="report : ${reportList}" class="card border-primary mb-3 report" style="max-width: 20rem;">
                 <div class="card-header">
                     <a th:text="${report.user.username}" th:href="@{'/report/' + ${report.id}}">User</a>
                 </div>
@@ -25,10 +26,10 @@
 
     </div>
 
-    <div class="footer general">Fooooooter</div>
+    <span th:replace="fragments :: auth"></span>
 
-<span th:replace="fragments :: auth"></span>
+    <div class="footer">Fooooooter</div>
 
-<span th:replace="fragments :: script"></span>
 </body>
+<span th:replace="fragments :: script"></span>
 </html>

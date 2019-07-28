@@ -2,22 +2,21 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 
-<body>
-
-<div class="wrapper">
+<body class="wrapper">
 
     <div class="nav-bar">
         <div th:replace="fragments :: navbar"></div>
     </div>
 
-    <div class="page">
-        <div class="login-form">
+    <div class="main general">
 
-            <h1 th:text="${title}">Default Title</h1>
+        <h1 th:text="${title}" class="center">Default Title</h1>
 
-            <p th:if="${error}" th:text="${error}" class="invalid-feedback error">show error</p>
+        <div class="">
 
-            <form name="f" method="post" >
+            <p th:if="${error}" th:text="${error}" class="invalid-feedback error center">show error</p>
+
+            <form name="f" method="post" class="contents">
                 <fieldset>
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -31,12 +30,16 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </fieldset>
             </form>
-            <div class="navbar-brand register">
-                <a href="/register" class="nav-link">New to Local Reports? <span class="orange">Register</span></a>
+
+            <div class="center">
+            <div class="navbar-brand register-link">
+                <a href="/register" class="nav-link">New to Local Reports? <span class="orange">Register now</span></a>
             </div>
+            </div>
+
         </div>
     </div>
-</div>
-<span th:replace="fragments :: script"></span>
+
 </body>
+<span th:replace="fragments :: script"></span>
 </html>

@@ -8,18 +8,20 @@
         <nav th:replace="fragments :: navbar"></nav>
     </div>
 
-    <div class="page account">
+    <div class="main general center">
         <h1 th:text="${title}">Default Title</h1>
 
-        <h5>Username:
-            <span sec:authentication="name">username</span>
-        </h5>
+        <div>
+            <h5>Username:
+                <span sec:authentication="name">username</span>
+            </h5>
 
-        <a href="/logout" class="">Logout
-            <form th:action="@{/user/logout}" method="post" th:hidden="true" >
-                <input type="submit" value="Logout" />
-            </form>
-        </a>
+            <a href="/logout" class="">Logout
+                <form th:action="@{/user/logout}" method="post" th:hidden="true" >
+                    <input type="submit" value="Logout" />
+                </form>
+            </a>
+        </div>
     </div>
 
 </body>

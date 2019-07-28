@@ -2,18 +2,16 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 
-<body>
-
-<div class="wrapper2">
+<body class="wrapper">
 
     <div class="nav-bar">
         <div th:replace="fragments :: navbar"></div>
     </div>
 
-    <div class="page">
-        <div class="register-form">
+    <div class="main general">
+        <h1 th:text="${title}" class="center">Default Title</h1>
 
-            <h1 th:text="${title}">Default Title</h1>
+        <div class="contents">
 
             <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
 
@@ -40,7 +38,7 @@
             </form>
         </div>
     </div>
-</div>
-<span th:replace="fragments :: script"></span>
+
 </body>
+<span th:replace="fragments :: script"></span>
 </html>
