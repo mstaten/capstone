@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class MainController {
     public String displayReportForm(Model model) {
         model.addAttribute("title", "Add Report");
         model.addAttribute(new Report());
-        return "report";
+        return "submitReport";
     }
 
     @PostMapping(value = "submitReport")
@@ -58,8 +59,11 @@ public class MainController {
     }
 
     @GetMapping(value = "report/{id}")
-    public String displayReport(Model model) {
-        return "report";
+    public String displayReport(Model model, @PathVariable int id) {
+        Report report = reportDao.findById(id);
+        model.addAttribute("title", report.getTitle());
+        model.addAttribute("report", report);
+        return "viewReport";
     }
 
 }
