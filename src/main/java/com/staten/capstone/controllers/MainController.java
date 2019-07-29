@@ -57,7 +57,7 @@ public class MainController {
         reportDao.save(report);
 
         // eventually will want to redirect to map now displaying this user report
-        return "redirect:/report/list";
+        return "redirect:/report/" + report.getId();
     }
 
     @GetMapping(value = "report/{id}")
@@ -81,12 +81,18 @@ public class MainController {
     public String displayReportListByUser(@PathVariable String username,
                                           Model model) {
 
-        int userId = userDao.findByUsername(username).getId();
+        // get requested user
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            // if no such user exists
+            return "redirect:/report/list";
+        }
 
-        // get reports by user
+        // get reports by this user
         List<Report> reports = new ArrayList<>();
         for (Report report : reportDao.findAll()) {
-            if (report.getUser().getId() == userId) {
+            if (report.getUser().equals(user)) {
+                // only add to list if report's user field matches this user
                 reports.add(report);
             }
         }
@@ -96,5 +102,58 @@ public class MainController {
         return "/reportList";
     }
 
+    // edit form - link only avail. when viewing own report list or indvdl report by user
+    @GetMapping(value = "report/edit/{id}")
+    public String displayEditReport(@PathVariable int id, Model model,
+                                    Principal principal) {
 
+        // get current user and report to edit
+        User user = userDao.findByUsername(principal.getName());
+        Report report = reportDao.findById(id);
+
+        // check if report exists
+        if (report == null) {
+            return "redirect:/report/list";
+        }
+
+        // check if user is eligible to edit report
+        if (user != report.getUser()) {
+            return "redirect:/unauthorized";
+        }
+
+        // display edit report
+        model.addAttribute("title", "Edit Report");
+        model.addAttribute("report", report);
+        return "editReport";
+    }
+
+    @PostMapping(value = "report/edit/{id}")
+    public String processEditReport(@PathVariable int id, Model model,
+                                    @ModelAttribute @Valid Report report, Errors errors) {
+
+        // find original cheese to be edited
+        Report origReport = reportDao.findById(id);
+
+        if (errors.hasErrors()) {
+            // only change fields that caused errors, otherwise keep edits
+            if (errors.hasFieldErrors("title")) {
+                report.setTitle("");
+            }
+            if (errors.hasFieldErrors("description")) {
+                report.setDescription("");
+            }
+            // display the edit-report-form again
+            model.addAttribute("title", "Edit Report");
+            return "editReport";
+        }
+
+        // edit fields
+        origReport.setTitle(report.getTitle());
+        origReport.setDescription(report.getDescription());
+
+        // save edits
+        reportDao.save(origReport);
+
+        return "redirect:/report/" + id;
+    }
 }

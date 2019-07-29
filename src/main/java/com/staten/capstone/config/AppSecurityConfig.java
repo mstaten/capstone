@@ -40,8 +40,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/static/**", "/images/**", "/css/**", "/register", "/unauthorized", "/report/**").permitAll()
-                    //.antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/resources", "/static/**", "/images/**", "/css/**",
+                                    "/register", "/unauthorized", "/", "/report/*", "/report/list/**").permitAll()
+                    //.antMatchers("/unauthorized/**").hasRole("USER")
                     //.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
                     .and()
@@ -49,7 +50,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                         .defaultSuccessUrl("/")
                         //.failureHandler(customAuthenticationHandler())
-                        .failureUrl("/login/error")
                         .permitAll()
                     .and()
                 .logout()
@@ -67,7 +67,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .expiredUrl("/expiredSession")
         ;
 
-        // .addLogoutHandler(logoutHandler)
     }
 
     @Override

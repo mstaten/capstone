@@ -26,13 +26,6 @@ public class UserController {
         return "user/login";
     }
 
-    @GetMapping(value = "login/error")
-    public String loginError(Model model) {
-        model.addAttribute("title", "Login");
-        model.addAttribute("error", "Bad credentials");
-        return "user/login";
-    }
-
     @GetMapping(value = "account/{userId}")
     public String showProfile(Model model, Principal principal,
                               @PathVariable int userId) {

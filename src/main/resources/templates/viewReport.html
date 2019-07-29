@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org/">
+<html lang="en" xmlns:th="http://thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
 <head th:replace="fragments :: head"></head>
 <body class="wrapper">
 
@@ -19,6 +19,9 @@
                 <div class="card-body">
                     <h4 th:text="${report.title}" class="card-title">Title</h4>
                     <p th:text="${report.description}" class="card-text">Body</p>
+                    <span sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getId()} == ${report.user.id}">
+                        <a th:href="@{'/report/edit/' + ${report.id}}" class="center my-link">Edit</a>
+                    </span>
                 </div>
             </div>
         </div>
