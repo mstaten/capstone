@@ -17,15 +17,14 @@
             <div th:if="${reportList} and ${reportList.size()}" th:each="report : ${reportList}" class="card border-primary mb-3 report" style="max-width: 20rem;">
                 <div class="card-header">
                     <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                    <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">
                         <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
                     </h4>
+                    <p th:text="${report.getFormattedZonedDateTime()}"></p>
                     <p th:text="${report.description}" class="card-text">Body</p>
-                    <span sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getId()} == ${report.user.id}">
-                        <a th:href="@{'/report/edit/' + ${report.id}}" class="center my-link">Edit</a>
-                    </span>
                 </div>
             </div>
         </div>

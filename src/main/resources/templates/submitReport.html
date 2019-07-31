@@ -20,15 +20,44 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="report-title">Report Title</label>
-                        <input th:field="*{title}" type="text" class="form-control" id="report-title" placeholder="Report title" />
+                        <input th:field="*{title}" type="text" class="form-control"
+                               id="report-title" placeholder="Report title" />
                         <div th:errors="*{title}" class="invalid-feedback error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Report Description</label>
-                        <textarea th:field="*{description}" type="text" class="form-control" id="description" placeholder="Enter report description"></textarea>
+                        <textarea th:field="*{description}" type="text" class="form-control"
+                                  id="description" placeholder="Enter report description"></textarea>
                         <div th:errors="*{description}" class="invalid-feedback error"></div>
                     </div>
+
+
+                    <div class="form-group">
+                        <label for="urgency">
+                            Urgency level
+                            <button type="button" class="btn btn-sm"
+                                    data-toggle="collapse" data-target="#urgency-collapse">
+                                <em>(?)</em>
+                            </button>
+                            <div id="urgency-collapse" class="collapse">
+                                <em>
+                                <p>1 - Currently Critical, Life-Threatening, Needs Immediate Action</p>
+                                <p>2 - Potentially Critical, Urgent but Non-Life-Threatening</p>
+                                <p>3 - Necessary</p>
+                                <p>4 - Recommended</p>
+                                <p>5 - No Priority, Take Note Only</p>
+                                </em>
+                            </div>
+                        </label>
+                        <select id="urgency" name="urgency" class="form-control">
+                            <option th:each="i : ${#numbers.sequence(1,5)}"
+                                    th:text="${i}"
+                                    th:value="${i}"></option>
+                        </select>
+                        <div th:errors="*{urgency}" class="invalid-feedback error"></div>
+                    </div>
+
 
                     <button type="submit" class="btn btn-primary">Submit Report</button>
                 </fieldset>

@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +43,14 @@ public class MainController {
 
     @PostMapping(value = "submitReport")
     public String processReportForm(@ModelAttribute @Valid Report report,
-                                    Errors errors, Model model,
-                                    Principal principal) {
+                                    Errors errors, @RequestParam int urgency,
+                                    Model model, Principal principal) {
         if (errors.hasErrors()) {
             // display form again with errors
             model.addAttribute("title", "Add Report");
-            return "report";
+            return "submitReport";
         }
 
-        // get current user, save w/report
         User user = userDao.findByUsername(principal.getName());
         report.setUser(user);
         // if no errors, save report
@@ -150,6 +150,7 @@ public class MainController {
         // edit fields
         origReport.setTitle(report.getTitle());
         origReport.setDescription(report.getDescription());
+        origReport.setUrgency(report.getUrgency());
 
         // save edits
         reportDao.save(origReport);

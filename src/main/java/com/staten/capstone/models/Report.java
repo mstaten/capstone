@@ -6,6 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Objects;
 
 @Entity
@@ -26,20 +30,29 @@ public class Report {
     @ManyToOne
     private User user;
 
-    public Report() {}
+    private ZonedDateTime zonedDateTime;
+
+    private Integer urgency;
+
+    public Report() {
+        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+    }
 
     public Report(String title, String description) {
+        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.title = title;
         this.description = description;
     }
 
     public Report(String title, String description, User user) {
+        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.title = title;
         this.description = description;
         this.user = user;
     }
 
     public Report(User user) {
+        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.user = user;
     }
 
@@ -69,6 +82,26 @@ public class Report {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ZonedDateTime getZonedDateTime() {
+        return zonedDateTime;
+    }
+
+    public void setZonedDateTime(ZonedDateTime zonedDateTime) {
+        this.zonedDateTime = zonedDateTime;
+    }
+
+    public String getFormattedZonedDateTime() {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(zonedDateTime);
+    }
+
+    public Integer getUrgency() {
+        return urgency;
+    }
+
+    public void setUrgency(Integer urgency) {
+        this.urgency = urgency;
     }
 
     @Override
