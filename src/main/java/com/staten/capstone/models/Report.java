@@ -32,6 +32,8 @@ public class Report {
 
     private ZonedDateTime zonedDateTime;
 
+    private ZonedDateTime lastEdit;
+
     private Integer urgency;
 
     public Report() {
@@ -102,6 +104,18 @@ public class Report {
 
     public void setUrgency(Integer urgency) {
         this.urgency = urgency;
+    }
+
+    public ZonedDateTime getLastEdit() {
+        return lastEdit;
+    }
+
+    public void setLastEdit(ZonedDateTime lastEdit) {
+        this.lastEdit = lastEdit;
+    }
+
+    public String getFormattedLastEdit() {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(lastEdit);
     }
 
     @Override

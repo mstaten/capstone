@@ -152,6 +152,9 @@ public class MainController {
         origReport.setDescription(report.getDescription());
         origReport.setUrgency(report.getUrgency());
 
+        // update field lastEdit to keep track of when this was edited
+        origReport.setLastEdit(ZonedDateTime.now(ZoneId.systemDefault()));
+
         // save edits
         reportDao.save(origReport);
 
