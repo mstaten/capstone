@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
+<head th:replace="fragments :: head"></head>
+<body class="wrapper">
+
+<div class="nav-bar">
+    <div th:replace="fragments :: navbar"></div>
+</div>
+
+<div class="main general">
+
+    <h1 th:text="${title}" class="center">Default Title</h1>
+
+    <div class="contents map-page">
+        <div class="map-container">
+            <div>
+                <input class="form-control" id="search" type="text" placeholder="Search by location..." />
+            </div>
+            <div id="map" style="width:720px;height:450px;"></div>
+        </div>
+
+        <div class="submit-form-container">
+            <form method="post" th:object="${report}" class="fill-container">
+                <div class="center">
+                    <h3>Submit a Report</h3>
+                    <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
+                </div>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="report-title">Report Title</label>
+                        <input th:field="*{title}" type="text" class="form-control"
+                               id="report-title" placeholder="Report title" />
+                        <div th:errors="*{title}" class="invalid-feedback error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Report Description</label>
+                        <textarea th:field="*{description}" type="text" class="form-control"
+                                  id="description" placeholder="Enter report description"></textarea>
+                        <div th:errors="*{description}" class="invalid-feedback error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="urgency">
+                            Urgency level
+                            <button type="button" class="btn btn-sm"
+                                    data-toggle="collapse" data-target="#urgency-collapse">
+                                <em>(?)</em>
+                            </button>
+                            <div id="urgency-collapse" class="collapse">
+                                <em>
+                                    <p>1 - Currently Critical, Life-Threatening, Needs Immediate Action</p>
+                                    <p>2 - Potentially Critical, Urgent but Non-Life-Threatening</p>
+                                    <p>3 - Necessary</p>
+                                    <p>4 - Recommended</p>
+                                    <p>5 - No Priority, Take Note Only</p>
+                                </em>
+                            </div>
+                        </label>
+                        <select id="urgency" name="urgency" class="form-control">
+                            <option th:each="i : ${#numbers.sequence(1,5)}"
+                                    th:text="${i}"
+                                    th:value="${i}"></option>
+                        </select>
+                        <div th:errors="*{urgency}" class="invalid-feedback error"></div>
+                    </div>
+
+                    <div class="center">
+                        <button type="submit" class="btn btn-primary">Submit Report</button>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="footer">Fooooooter</div>
+
+<span th:replace="fragments :: auth"></span>
+
+</body>
+<span th:replace="fragments :: script"></span>
+
+<!-- Google Maps scripts -->
+<div th:replace="mapkey :: map-key"></div>
+<script src="js/script.js"></script>
+
+<!--<script src="script.js"></script>-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOqTM7NU0_90bIEoXezlCAwpklCY3fB8M&amp;callback=createMap&amp;libraries=places" async="async" defer="defer"></script>-->
+
+</html>

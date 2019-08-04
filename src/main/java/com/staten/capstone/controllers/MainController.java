@@ -41,10 +41,13 @@ public class MainController {
         return "submitReport";
     }
 
-    @PostMapping(value = "submitReport")
+    @PostMapping(value = {"submitReport", "localreports"})
     public String processReportForm(@ModelAttribute @Valid Report report,
                                     Errors errors, @RequestParam int urgency,
                                     Model model, Principal principal) {
+        // also get the marker Location object
+        // is there a reason don't use urgency
+
         if (errors.hasErrors()) {
             // display form again with errors
             model.addAttribute("title", "Add Report");
@@ -53,6 +56,7 @@ public class MainController {
 
         User user = userDao.findByUsername(principal.getName());
         report.setUser(user);
+        // report.setLocation(location);    // also set location
         // if no errors, save report
         reportDao.save(report);
 
@@ -160,4 +164,17 @@ public class MainController {
 
         return "redirect:/report/" + id;
     }
+
+    @GetMapping(value = "localreports")
+    public String displayMapPage(Model model) {
+
+        // listen for clicks on map, save a click
+
+        // display list of results
+
+        // display submit form
+        model.addAttribute(new Report());
+        return "map";
+    }
+
 }

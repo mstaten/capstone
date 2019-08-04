@@ -1,9 +1,6 @@
 package com.staten.capstone.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.ZoneId;
@@ -35,6 +32,10 @@ public class Report {
     private ZonedDateTime lastEdit;
 
     private Integer urgency;
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     public Report() {
         this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
@@ -94,8 +95,12 @@ public class Report {
         this.zonedDateTime = zonedDateTime;
     }
 
-    public String getFormattedZonedDateTime() {
-        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(zonedDateTime);
+    public ZonedDateTime getLastEdit() {
+        return lastEdit;
+    }
+
+    public void setLastEdit(ZonedDateTime lastEdit) {
+        this.lastEdit = lastEdit;
     }
 
     public Integer getUrgency() {
@@ -106,12 +111,17 @@ public class Report {
         this.urgency = urgency;
     }
 
-    public ZonedDateTime getLastEdit() {
-        return lastEdit;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLastEdit(ZonedDateTime lastEdit) {
-        this.lastEdit = lastEdit;
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    /* Other methods */
+    public String getFormattedZonedDateTime() {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(zonedDateTime);
     }
 
     public String getFormattedLastEdit() {
