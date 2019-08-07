@@ -17,6 +17,12 @@
                 <input class="form-control" id="search" type="text" placeholder="Search by location..." />
             </div>
             <div id="map" style="width:720px;height:450px;"></div>
+
+            <div><p id="myMarker"></p></div>
+            <div><p id="myMarker-end"></p></div>
+            <div><p id="myMarker-start"></p></div>
+            <div><p id="latLng"></p></div>
+            <div><p id="lngbox"></p></div>
         </div>
 
         <div class="submit-form-container">
@@ -78,7 +84,6 @@
 
 </div>
 
-<div class="footer">Fooooooter</div>
 
 <span th:replace="fragments :: auth"></span>
 
@@ -86,7 +91,7 @@
 <span th:replace="fragments :: script"></span>
 
 <!-- Google Maps scripts -->
-<div th:replace="mapkey :: map-key"></div>
 <script src="js/script.js"></script>
+<div th:replace="mapkey :: map-key"></div>
 
 </html>

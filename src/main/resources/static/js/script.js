@@ -3,7 +3,7 @@ var map;
 function createMap () {
 
     var options = {
-        center:new google.maps.LatLng(41.881832, -87.623177),
+        center: new google.maps.LatLng(41.881832, -87.623177),
         zoom: 10
     };
 
@@ -13,29 +13,19 @@ function createMap () {
     /* enable the user to drop a pin */
 
     // add listener for click on map
-    google.maps.event.addListener(map, "click", function(event) {
+    map.addListener('click', function(event) {
         // add marker
-        addMarker({coords:event.latLng});
+        addMarker(event.latLng);
+        // add to thymeleaf
+        document.getElementById('myMarker').innerHTML = event.latLng;
     });
 
     // add marker to map function
-    function addMarker(props) {
+    function addMarker(coords) {
         var marker = new google.maps.Marker({
-            position:props.coords,
-            map:map,
-            draggable:true
+            position: coords,
+            map: map
         });
-
-        // check for content
-        if(props.content) {
-            var infoWindow = new google.maps.InfoWindow({
-                content:props.content
-            });
-
-            marker.addListener("click", function() {
-                infoWindow.open(map, marker);
-            });
-        }
     }
 
 

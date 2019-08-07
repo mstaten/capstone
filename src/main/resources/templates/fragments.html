@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <div th:fragment="auth" class="general">
+    <div th:fragment="auth2" class="general">
         <div sec:authorize="!isAuthenticated()">Text for non-authenticated users.</div>
         <div sec:authorize="isAuthenticated()">Text for authenticated users.</div>
     </div>
