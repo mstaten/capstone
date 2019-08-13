@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
+<html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="wrapper">
 
@@ -17,12 +17,6 @@
                 <input class="form-control" id="search" type="text" placeholder="Search by location..." />
             </div>
             <div id="map" style="width:720px;height:450px;"></div>
-
-            <div><p id="myMarker"></p></div>
-            <div><p id="myMarker-end"></p></div>
-            <div><p id="myMarker-start"></p></div>
-            <div><p id="latLng"></p></div>
-            <div><p id="lngbox"></p></div>
         </div>
 
         <div class="submit-form-container">
@@ -74,9 +68,14 @@
                     <div class="center">
                         <button type="submit" class="btn btn-primary">Submit Report</button>
                     </div>
+                    <textarea hidden="true" name="newLocation" id="newLocation"></textarea>
                 </fieldset>
             </form>
 
+        </div>
+        <div hidden="true"><span class="loc" th:each="loc : ${locations}" th:text="${loc.latLng}"></span></div>
+        <div class="center">
+            <button id="loadLocations">View all locations</button>
         </div>
 
     </div>

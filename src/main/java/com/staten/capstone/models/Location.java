@@ -14,11 +14,11 @@ public class Location {
     @GeneratedValue
     private Integer id;
 
-    @NotNull
     private Long latitude;
 
-    @NotNull
     private Long longitude;
+
+    private String latLng;
 
     private String name;
 
@@ -58,6 +58,14 @@ public class Location {
 
     public void setLongitude(Long longitude) {
         this.longitude = longitude;
+    }
+
+    public String getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(String latLng) {
+        this.latLng = latLng;
     }
 
     public String getName() {

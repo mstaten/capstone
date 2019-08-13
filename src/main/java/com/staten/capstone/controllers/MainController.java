@@ -1,7 +1,9 @@
 package com.staten.capstone.controllers;
 
+import com.staten.capstone.models.Location;
 import com.staten.capstone.models.Report;
 import com.staten.capstone.models.User;
+import com.staten.capstone.models.data.LocationDao;
 import com.staten.capstone.models.data.ReportDao;
 import com.staten.capstone.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class MainController {
     @Autowired
     private ReportDao reportDao;
 
+    @Autowired
+    private LocationDao locationDao;
+
     @GetMapping(value = "")
     public String index(Model model) {
         model.addAttribute("title", "Local Reports");
@@ -44,9 +49,9 @@ public class MainController {
     @PostMapping(value = {"submitReport", "localreports"})
     public String processReportForm(@ModelAttribute @Valid Report report,
                                     Errors errors, @RequestParam int urgency,
+                                    @RequestParam String newLocation,
                                     Model model, Principal principal) {
-        // also get the marker Location object
-        // is there a reason don't use urgency
+        // is there a reason I don't use urgency
 
         if (errors.hasErrors()) {
             // display form again with errors
@@ -54,9 +59,13 @@ public class MainController {
             return "submitReport";
         }
 
+        Location myLocation = new Location();
+        myLocation.setLatLng(newLocation);
+        locationDao.save(myLocation);
+
         User user = userDao.findByUsername(principal.getName());
         report.setUser(user);
-        // report.setLocation(location);    // also set location
+        report.setLocation(myLocation);    // also set location
         // if no errors, save report
         reportDao.save(report);
 
@@ -167,12 +176,7 @@ public class MainController {
 
     @GetMapping(value = "localreports")
     public String displayMapPage(Model model) {
-
-        // listen for clicks on map, save a click
-
-        // display list of results
-
-        // display submit form
+        model.addAttribute("locations", locationDao.findAll());
         model.addAttribute(new Report());
         return "map";
     }
