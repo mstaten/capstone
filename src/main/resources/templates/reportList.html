@@ -14,7 +14,10 @@
 
         <div class="contents">
             <p th:unless="${reportList} and ${reportList.size()}">There are no reports by this user yet</p>
-            <div th:if="${reportList} and ${reportList.size()}" th:each="report : ${reportList}" class="card border-primary mb-3 report" style="max-width: 20rem;">
+            <div th:if="${reportList} and ${reportList.size()}"
+                 th:each="report : ${reportList}"
+                 class="card border-primary mb-3 report"
+                 style="max-width: 20rem;">
                 <div class="card-header">
                     <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
                     <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>

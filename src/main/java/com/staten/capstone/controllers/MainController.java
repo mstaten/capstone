@@ -178,6 +178,7 @@ public class MainController {
     public String displayMapPage(Model model) {
         model.addAttribute("locations", locationDao.findAll());
         model.addAttribute(new Report());
+        model.addAttribute("reportList", reportDao.findAll());
         return "map";
     }
 

@@ -121,15 +121,125 @@ img {
 }
 
 .map-container, .submit-form-container {
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
 }
 
 .submit-form-container {
     display: flex;
     align-items: center;
-    width: 400px;
+    max-width: 40%;
+    min-width: 400px;
+}
+
+.tab-main {
+    height: 450px;
+    overflow: scroll;
 }
 
 .fill-container {
     width: 100%;
+}
+
+#toggle-left {
+    border: 1px solid #333333;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-right: 0px;
+}
+
+#toggle-right {
+    border: 1px solid #333333;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.nav-tabs {
+    width: 280px;
+    display: flex;
+    border-bottom: none;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.nav-item {
+    padding: 0px;
+    margin: 0px;
+}
+
+.map-toggle {
+    background-color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0px 18px;
+    height: 100%    ;
+    cursor: pointer;
+    outline: none;
+    padding-top: 0.8em;
+    padding-bottom: 0.4em;
+    text-align: center;
+}
+
+.map-toggle-btn {
+    border-style: none;
+    width: 160px;
+    padding-top: 0.4em;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#search {
+    width: 300px;
+}
+
+.map-nav-bar {
+    height: 50px;
+    width: 100%;
+}
+
+.map-nav-bar.btn-group {
+
+}
+
+.map-nav-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.btn-outline {
+    border-color: #919aa1;
+    color: #919aa1;
+}
+
+textarea.form-control {
+    height: 100px;
+}
+
+.report-header {
+    padding: 0.5em;
+}
+
+.report-body {
+    padding: 0.5em;
+    display: block;
+}
+
+.one-report {
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.datetime {
+    font-size: 0.8em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.in {
+    width: 200px;
+}
+
+.report-header a {
+    color: inherit;
 }
