@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
+<head th:replace="fragments :: head"></head>
+
+<body class="wrapper">
+
+<div class="nav-bar">
+    <nav th:replace="fragments :: navbar"></nav>
+</div>
+
+<div class="main general">
+    <h1 class="center" th:text="${title}">Default Title</h1>
+
+    <div class="about">
+        <div class="about-text">
+            <p class="about-p text-primary">Local Reports is a web app that allows you to
+                <span class="text-info lead">share valuable information about the state of local streets.</span>
+                For a problem anywhere from potholes to flooded roads, you
+                can report it in detail and pinpoint its location on the map. You can also view
+                all reports submitted by others and their locations on the map so you know whether
+                an issue has been reported yet.
+            </p>
+
+            <p class="about-sm">
+                <em>Created by drivers like you</em> who are sick of dodging that one pothole that
+                never seems to get filled in.
+            </p>
+            <p class="about-sm">
+                <em>By people experiencing power outages</em> who want to know whether homes
+                around them are affected as well.
+            </p>
+            <p class="about-sm">
+                <em>And by commuters just trying to get home from work</em> who need to know if
+                there is flooding along their route home.
+            </p>
+            <p class="about-p text-info">Here's to you!</p>
+        </div>
+
+        <div class="about-list">
+            <div class="card text-white bg-info mb-3">
+                <span class="card-header">Steps to submit a report:</span>
+                <div class="card-body">
+                    <ol class="card-text inline-block">
+                        <li>Enter your location in the search bar</li>
+                        <li>Drop a pin</li>
+                        <li>Fill out report title &amp; description</li>
+                        <li>Select the level of urgency</li>
+                        <li>Hit Submit!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card text-white bg-warning mb-3">
+                <span class="card-header">Issues you might report:</span>
+                <div class="card-body">
+                    <ul class="card-text square">
+                        <li>pothole</li>
+                        <li>tree blocking a street</li>
+                        <li>damaged or missing street sign</li>
+                        <li>flooded roads</li>
+                        <li>excessive trash</li>
+                        <li>power outage</li>
+                        <li>and so on!</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+<span th:replace="fragments :: script"></span>
+</html>

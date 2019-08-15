@@ -132,7 +132,8 @@ img {
 }
 
 .tab-main {
-    height: 450px;
+    margin-top: 10px;
+    height: 410px;
     overflow: scroll;
 }
 
@@ -242,4 +243,36 @@ textarea.form-control {
 
 .report-header a {
     color: inherit;
+}
+
+/* the about page */
+.about {
+    display: flex;
+    justify-contents: space-between;
+    padding: 10px 70px;
+}
+.about-text {
+    width: 60%;
+    margin: 0 50px 0 0;
+}
+
+.about-p {
+    font-size: 1.2em;
+    letter-spacing: .6px;
+    padding-bottom: 20px;
+}
+.about-p span {
+
+}
+
+.about-list div {
+    padding-bottom: 20px;
+}
+
+.card-text.square {
+    list-style-type: square;
+}
+
+.indent {
+    padding-left: 20px;
 }

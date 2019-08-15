@@ -182,4 +182,10 @@ public class MainController {
         return "map";
     }
 
+    @GetMapping(value = "about")
+    public String displayAboutPage(Model model) {
+        model.addAttribute("title", "About Local Reports");
+        return "about";
+    }
+
 }
