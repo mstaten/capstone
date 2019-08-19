@@ -14,10 +14,9 @@
 
         <!-- Nav bar specifically for map page -->
         <div class="map-nav-bar btn-group">
-            <form class="form-inline my-2 my-lg-0">
+            <span class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" id="search" type="text" placeholder="Search by location..." />
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </span>
             <button id="loadLocations" class="btn nav-link">View all locations</button>
 
             <!-- Toggle Tabs for Report List / Submit Report -->
@@ -34,7 +33,12 @@
 
         <!-- Map -->
         <div class="map-container">
-            <div id="map" style="width:720px;height:450px;"></div>
+            <div id="map" style="width:680px;height:420px;"></div>
+            <div id="infowindow-content" class="text-primary">
+                <span id="info-title"></span>
+                <span id="info-urgency" class="text-danger float-right"></span><br/>
+                <span id="info-body"></span><br/>
+            </div>
         </div>
 
         <!-- Begin Tab Content -->
@@ -46,21 +50,24 @@
                 </div>
                 <div class="tab-main">
                     <div th:if="${reportList} and ${reportList.size()}"
-                         th:each="report : ${reportList}" class="card border-secondary">
+                         th:each="report : ${reportList}"
+                         th:id="${report.location.latLng}" class="card border-secondary">
 
                         <!-- report header -->
                         <div class="report-header card-header">
                             <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
                             <span class="float-right">
-                            Urgency level:
-                            <span th:text="${report.urgency}" class="urgency-level">Urgency</span>
-                        </span>
+                                Urgency level:
+                                <span th:text="${report.urgency}" class="urgency-level" id="rep-urgency">Urgency</span>
+                            </span>
+                            <span th:text="${report.id}" id="rep-id" hidden="true"></span>
                         </div>
 
                         <!-- report body -->
                         <div class="report-body">
                             <p th:text="${report.getFormattedZonedDateTime()}" class="datetime"></p>
-                            <p th:text="${report.description}" class="card-text">Body</p>
+                            <p th:text="${report.location.latLng}"></p>
+                            <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
                         </div>
                     </div>
                 </div>
@@ -75,50 +82,50 @@
                         <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
                     </div>
                     <fieldset class="tab-main">
-                                <div class="form-group">
-                                    <label for="report-title">Report Title</label>
-                                    <input th:field="*{title}" type="text" class="form-control"
-                                           id="report-title" placeholder="Report title" />
-                                    <div th:errors="*{title}" class="invalid-feedback error"></div>
-                                </div>
+                        <div class="form-group">
+                            <label for="report-title">Report Title</label>
+                            <input th:field="*{title}" type="text" class="form-control"
+                                   id="report-title" placeholder="Report title" />
+                            <div th:errors="*{title}" class="invalid-feedback error"></div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="description">Report Description</label>
-                                    <textarea th:field="*{description}" type="text" class="form-control"
-                                              id="description" placeholder="Enter report description"></textarea>
-                                    <div th:errors="*{description}" class="invalid-feedback error"></div>
-                                </div>
+                        <div class="form-group">
+                            <label for="description">Report Description</label>
+                            <textarea th:field="*{description}" type="text" class="form-control"
+                                      id="description" placeholder="Enter report description"></textarea>
+                            <div th:errors="*{description}" class="invalid-feedback error"></div>
+                        </div>
 
-                                <div class="form-group form-group-urgency">
-                                    <label for="urgency">
-                                        Urgency level
-                                        <button type="button" class="btn btn-sm"
-                                                data-toggle="collapse" data-target="#urgency-collapse">
-                                            <em>(?)</em>
-                                        </button>
-                                        <div id="urgency-collapse" class="collapse collapse-scroll">
-                                            <em>
-                                                <p>1 - Currently Critical, Life-Threatening, Needs Immediate Action</p>
-                                                <p>2 - Potentially Critical, Urgent but Non-Life-Threatening</p>
-                                                <p>3 - Necessary</p>
-                                                <p>4 - Recommended</p>
-                                                <p>5 - No Priority, Take Note Only</p>
-                                            </em>
-                                        </div>
-                                    </label>
-                                    <select id="urgency" name="urgency" class="form-control">
-                                        <option th:each="i : ${#numbers.sequence(1,5)}"
-                                                th:text="${i}"
-                                                th:value="${i}"></option>
-                                    </select>
-                                    <div th:errors="*{urgency}" class="invalid-feedback error"></div>
+                        <div class="form-group form-group-urgency">
+                            <label for="urgency">
+                                Urgency level
+                                <button type="button" class="btn btn-sm"
+                                        data-toggle="collapse" data-target="#urgency-collapse">
+                                    <em>(?)</em>
+                                </button>
+                                <div id="urgency-collapse" class="collapse collapse-scroll">
+                                    <em>
+                                        <p>1 - Currently Critical, Life-Threatening, Needs Immediate Action</p>
+                                        <p>2 - Potentially Critical, Urgent but Non-Life-Threatening</p>
+                                        <p>3 - Necessary</p>
+                                        <p>4 - Recommended</p>
+                                        <p>5 - No Priority, Take Note Only</p>
+                                    </em>
                                 </div>
+                            </label>
+                            <select id="urgency" name="urgency" class="form-control">
+                                <option th:each="i : ${#numbers.sequence(1,5)}"
+                                        th:text="${i}"
+                                        th:value="${i}"></option>
+                            </select>
+                            <div th:errors="*{urgency}" class="invalid-feedback error"></div>
+                        </div>
 
-                                <div class="center">
-                                    <button type="submit" class="btn btn-primary">Submit Report</button>
-                                </div>
-                                <textarea hidden="true" name="newLocation" id="newLocation"></textarea>
-                            </fieldset>
+                        <div class="center">
+                            <button type="submit" class="btn btn-primary">Submit Report</button>
+                        </div>
+                        <textarea hidden="true" name="newLocation" id="newLocation"></textarea>
+                    </fieldset>
                 </form>
             </div>
         </div>

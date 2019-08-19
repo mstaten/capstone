@@ -276,3 +276,22 @@ textarea.form-control {
 .indent {
     padding-left: 20px;
 }
+
+/* for info window content on map */
+#infowindow-content {
+    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.2em;
+}
+
+#info-title {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+#info-urgency {
+    font-style: italic;
+}
+
+#info-description {
+    font-size: 0.85em;
+}

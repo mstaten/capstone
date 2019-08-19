@@ -1,57 +1,28 @@
-var map;
-var markers = [];       // markers array to hold new markers
-var givenMarkers = [];  // markers array to hold markers of previously saved locations
+/* script 4 */
 
-function createMap () {
+var map;
+var newMarkers = [];
+var givenMarkers = [];
+var infoWindows = [];
+
+function createMap() {
+    var origin = {lat: 41.881832, lng: -87.623177};
 
     var options = {
-        center: new google.maps.LatLng(41.881832, -87.623177),
+        center: origin,
         zoom: 10
     };
+
     map = new google.maps.Map(document.getElementById('map'), options);
 
-
-    /* enable the user to drop a pin */
-
-    // add listener for click on map
     map.addListener('click', function(event) {
-        if (markers.length >= 1) {
+        if (newMarkers.length >= 1) {  // clear markers
             deleteMarkers();
         }
-
-        // add marker
-        addMarker(event.latLng, markers);
-
-        // add to thymeleaf
-        document.getElementById('newLocation').innerHTML = event.latLng;
+        // add marker to map, add to Thymeleaf
+        addMarker(null, event.latLng, newMarkers);
+        document.getElementById('newLocation').innerText = event.latLng;
     });
-
-    // add marker to map and push to markers array
-    function addMarker(coords, markersArray) {
-        var marker = new google.maps.Marker({
-            position: coords,
-            map: map
-        });
-        markersArray.push(marker);
-    }
-
-    // sets map on all markers in array
-    function setMapOnMarkers(myMap) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(myMap);
-        }
-    }
-
-    // deletes all markers in array
-    function deleteMarkers() {
-        // remove markers from map first
-        setMapOnMarkers(null);
-        // clear array
-        markers = [];
-    }
-
-
-    /* place all previous markers on the map */
 
     // load button
     window.onload = function() {
@@ -59,28 +30,7 @@ function createMap () {
         btn.onclick = displayGivenLocations;
     }
 
-    function displayGivenLocations() {
-        // get all locations from thymeleaf element
-        var coordinates = document.getElementsByClassName('loc');
-
-        // loop over locations
-        for (var i = 0; i < coordinates.length; i++) {
-            console.log(coordinates[i].innerHTML);
-            displayLocationAt(coordinates[i].innerHTML);
-        }
-    }
-
-    function displayLocationAt(coords) {
-        var n = coords.indexOf(',');        // find break in the string between lat and lng
-        var myLat = parseFloat(coords.substring(1,n));
-        var myLng = parseFloat(coords.substring(n+1, coords.length-1));
-        var myLatLng = {lat: myLat, lng: myLng};
-        addMarker(myLatLng, givenMarkers);  // add marker at given location
-    }
-
-
-    /* enable searchBox */
-
+    // enable searchBox
     var input = document.getElementById('search');
     var searchBox = new google.maps.places.SearchBox(input);
 
@@ -110,5 +60,99 @@ function createMap () {
 
         map.fitBounds(bounds);
     });
+}
 
+// get locations from thymeleaf and display all
+function displayGivenLocations() {
+
+    var coordinates = document.getElementsByClassName('loc');
+
+    // loop over locations
+    for (var i = 0; i < coordinates.length; i++) {
+
+        // convert coords to appropriate LatLng
+        var stringLatLng = coordinates[i].innerText;
+        var convertedLatLng = convertCoords(stringLatLng);
+
+        // add marker
+        addMarker(stringLatLng, convertedLatLng, givenMarkers);
+    }
+}
+
+// convert coords to appropriate LatLng style
+function convertCoords(coords) {
+    var n = coords.indexOf(',');        // find break in the string between lat and lng
+    var myLat = parseFloat(coords.substring(1,n));
+    var myLng = parseFloat(coords.substring(n+1, coords.length-1));
+    var myLatLng = {lat: myLat, lng: myLng};
+    return myLatLng;
+}
+
+function addMarker(oldCoords, coords, markersArray) {
+    var marker = new google.maps.Marker({
+        position: coords,
+        map: map
+    });
+    markersArray.push(marker);
+    var infoWindowContent = document.getElementById('infowindow-content');
+
+    // add marker listener
+    marker.addListener('click', function() {
+        if (!oldCoords) {
+            return;
+        }
+
+        closeInfoWindows();
+        getPlaceInformation(oldCoords, marker, infoWindowContent);
+    });
+}
+
+function closeInfoWindows() {
+    if (infoWindows.length != 0) {
+        for (var i=0; i < infoWindows.length; i++) {
+            infoWindows[i].close();
+        }
+    }
+}
+
+function getPlaceInformation(stringLatLng, marker, infoWindowContent) {
+
+    // find specific report by latLng value (from thymeleaf)
+    var docLatLng = document.getElementById(stringLatLng.toString());
+
+    if (!docLatLng) {
+        return;
+    }
+
+    var infoWindow = new google.maps.InfoWindow({maxWidth: 300});
+
+    // get specific info
+    var reportId = docLatLng.children[0].children[2].innerText;
+    var title = docLatLng.children[0].children[0].innerText;
+    var urgency = docLatLng.children[0].children[1].children[0].innerText;
+    var description = docLatLng.children[1].children[2].innerText;
+
+    // set content
+    infoWindowContent.children['info-title'].innerHTML = '<a href="/report/' + reportId + '">' + title + '</a>';
+    infoWindowContent.children['info-urgency'].innerText = "Urgency level: " + urgency;
+    infoWindowContent.children['info-body'].innerText = description;
+
+    infoWindow.setContent(infoWindowContent);
+    infoWindow.open(map, marker);
+    infoWindows.push(infoWindow);
+}
+
+// sets map on all markers in array
+function setMapOnMarkers(myMap) {
+    for (var i = 0; i < newMarkers.length; i++) {
+        newMarkers[i].setMap(myMap);
+    }
+}
+
+// deletes all markers in array
+function deleteMarkers() {
+    // remove markers from map first
+    setMapOnMarkers(null);
+    // clear array
+    newMarkers = [];
 }
