@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
+<head th:replace="fragments :: head"></head>
+
+<body class="wrapper">
+
+<div class="nav-bar">
+    <div th:replace="fragments :: navbar"></div>
+</div>
+
+<div class="main general">
+
+    <h1 th:text="${title}" class="center">Default Title</h1>
+
+    <p th:unless="${reportsSlice} and ${reportsSlice.hasContent()}">There are no reports to show</p>
+
+    <ul th:if="${reportsSlice}" class="pagination-ul top">
+        <li class="pagination-li">
+            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+                <span class="chevron left"></span>
+            </a>
+            <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
+                <span class="chevron left light"></span>
+            </a>
+        </li>
+        <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
+
+        <li class="pagination-li">
+            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+                <span class="chevron right"></span>
+            </a>
+            <a th:if="${reportsSlice.isLast()}" class="pagination-li">
+                <span class="chevron right light"></span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="contents">
+        <div th:if="${reportsSlice} and ${reportsSlice.hasContent()}">
+            <div th:each="report : ${reportsSlice.getContent()}"
+                     class="card border-primary mb-3 report"
+                     style="max-width: 20rem;">
+                    <div class="card-header">
+                        <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                        <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
+                        </h4>
+                        <p th:text="${report.getFormattedZonedDateTime()}"></p>
+                        <p th:text="${report.description}" class="card-text">Body</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <ul th:if="${reportsSlice}" class="pagination-ul top">
+        <li class="pagination-li">
+            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+                <span class="chevron left"></span>
+            </a>
+            <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
+                <span class="chevron left light"></span>
+            </a>
+        </li>
+        <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
+
+        <li class="pagination-li">
+            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+                <span class="chevron right"></span>
+            </a>
+            <a th:if="${reportsSlice.isLast()}" class="pagination-li">
+                <span class="chevron right light"></span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<span th:replace="fragments :: auth"></span>
+
+</body>
+<span th:replace="fragments :: script"></span>
+</html>

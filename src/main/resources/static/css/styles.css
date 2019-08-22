@@ -17,7 +17,7 @@
     grid-template-areas:    "nav    nav     nav     nav     nav     nav"
                             "main   main    main    main    main    main"
                             "main   main    main    main    main    main"
-                            "footer footer  footer  footer  footer  footer";
+                            "main   main    main    main    main    main";
 }
 
 /* grid areas */
@@ -101,6 +101,7 @@ img {
     margin: 15px 40px;
     text-decoration: none;
 
+
     /*max-width: 700px;*/
 }
 
@@ -139,6 +140,14 @@ img {
 
 .fill-container {
     width: 100%;
+}
+
+.fill-container input, .fill-container textarea, .fill-container select {
+    margin: 5px;
+}
+
+.fill-container label {
+    margin: 5px;
 }
 
 #toggle-left {
@@ -294,4 +303,53 @@ textarea.form-control {
 
 #info-description {
     font-size: 0.85em;
+}
+
+/* pagination styles */
+.chevron::before {
+	border-style: solid;
+	border-width: 0.1em 0.05em 0 0;
+	content: '';
+	display: inline-block;
+	height: 0.6em;
+	position: relative;
+	top: 0em;
+	transform: rotate(-45deg);
+	vertical-align: center;
+    width: 0.6em;
+    color: #5c5c5f;
+}
+.chevron.left:before {
+	left: 0.25em;
+	transform: rotate(-135deg);
+}
+.chevron.right:before {
+	left: 0;
+	transform: rotate(45deg);
+}
+.chevron.left.light:before, .chevron.right.light:before {
+    color: #ccc;
+}
+.pagination-ul {
+    padding: 0;
+    margin: 0;
+    border: none;
+    font-size: 16pt;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+}
+.pagination-li {
+    width: 10px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: relative;
+    color: #757575;
+}
+.pg-current {
+    padding-left:15px;
+    padding-right: 15px;
 }

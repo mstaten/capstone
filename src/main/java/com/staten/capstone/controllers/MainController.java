@@ -6,7 +6,11 @@ import com.staten.capstone.models.User;
 import com.staten.capstone.models.data.LocationDao;
 import com.staten.capstone.models.data.ReportDao;
 import com.staten.capstone.models.data.UserDao;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,10 +20,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -39,16 +39,9 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping(value = "submitReport")
-    public String displayReportForm(Model model) {
-        model.addAttribute("title", "Add Report");
-        model.addAttribute(new Report());
-        return "submitReport";
-    }
-
-    @PostMapping(value = {"submitReport", "localreports"})
+    @PostMapping(value = {"localreports"})
     public String processReportForm(@ModelAttribute @Valid Report report,
-                                    Errors errors, @RequestParam int urgency,
+                                    Errors errors,
                                     @RequestParam String newLocation,
                                     Model model, Principal principal) {
         // is there a reason I don't use urgency
@@ -56,7 +49,7 @@ public class MainController {
         if (errors.hasErrors()) {
             // display form again with errors
             model.addAttribute("title", "Add Report");
-            return "submitReport";
+            return "map";
         }
 
         Location myLocation = new Location();
@@ -65,7 +58,7 @@ public class MainController {
 
         User user = userDao.findByUsername(principal.getName());
         report.setUser(user);
-        report.setLocation(myLocation);    // also set location
+        report.setLocation(myLocation);
         // if no errors, save report
         reportDao.save(report);
 
@@ -82,17 +75,33 @@ public class MainController {
     }
 
     @GetMapping(value = "report/list")
-    public String displayReportList(Model model) {
-        // view all reports
+    public String displayReportList(Model model, HttpServletRequest request) {
+
+        int pageNumber = 0;
+
+        // if query exists, use query parameter as pageNumber
+        if (request.getQueryString() != null) {
+            String queryString = request.getQueryString();
+            int equalsIndex = queryString.indexOf("=");
+            String pageNumberStr = queryString.substring(equalsIndex+1); // get number from string
+            pageNumber = Integer.parseInt(pageNumberStr) - 1;
+        }
+
+        // format requested page number, number of reports
+        Pageable pageable = new PageRequest(pageNumber,3);
+
+        // get all reports, 3 per page
+        Slice<Report> reportsSlice = reportDao.findAll(pageable);
+
         model.addAttribute("title", "All Reports");
-        model.addAttribute("reportList", reportDao.findAll());
+        model.addAttribute("reportsSlice", reportsSlice);
         return "/reportList";
     }
 
     // view reports by specific user
     @GetMapping(value = "report/list/{username}")
     public String displayReportListByUser(@PathVariable String username,
-                                          Model model) {
+                                          Model model, HttpServletRequest request) {
 
         // get requested user
         User user = userDao.findByUsername(username);
@@ -101,18 +110,26 @@ public class MainController {
             return "redirect:/report/list";
         }
 
-        // get reports by this user
-        List<Report> reports = new ArrayList<>();
-        for (Report report : reportDao.findAll()) {
-            if (report.getUser().equals(user)) {
-                // only add to list if report's user field matches this user
-                reports.add(report);
-            }
+        int pageNumber = 0;
+
+        // if query exists, use query parameter as pageNumber
+        if (request.getQueryString() != null) {
+            String queryString = request.getQueryString();
+            int equalsIndex = queryString.indexOf("=");
+            String pageNumberStr = queryString.substring(equalsIndex+1); // get number from string
+            pageNumber = Integer.parseInt(pageNumberStr) - 1;
         }
 
+        // format requested page number, number of reports
+        Pageable pageable = new PageRequest(pageNumber,3);
+
+        // get reports by this user
+        Slice<Report> reportsSlice = reportDao.findAllByUser(user, pageable);
+
         model.addAttribute("title", "All Reports by " + username);
-        model.addAttribute("reportList", reports);
-        return "/reportList";
+        model.addAttribute("username", username);
+        model.addAttribute("reportsSlice", reportsSlice);
+        return "/reportListByUser";
     }
 
     // edit form - link only avail. when viewing own report list or indvdl report by user
@@ -144,7 +161,7 @@ public class MainController {
     public String processEditReport(@PathVariable int id, Model model,
                                     @ModelAttribute @Valid Report report, Errors errors) {
 
-        // find original cheese to be edited
+        // find original report to be edited
         Report origReport = reportDao.findById(id);
 
         if (errors.hasErrors()) {
@@ -177,7 +194,7 @@ public class MainController {
     @GetMapping(value = "localreports")
     public String displayMapPage(Model model) {
         model.addAttribute("locations", locationDao.findAll());
-        model.addAttribute(new Report());
+        model.addAttribute(new Report());   // for submitting a report on this page
         model.addAttribute("reportList", reportDao.findAll());
         return "map";
     }
