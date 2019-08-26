@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary">Sort</button>
                         </div>
                     </form>
                 </div>
@@ -96,6 +96,28 @@
                             <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <ul th:if="${reportsSlice}" class="pagination-ul top">
+                        <li class="pagination-li">
+                            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/localreports?page=' + (${reportsSlice.getNumber()})">
+                                <span class="chevron left"></span>
+                            </a>
+                            <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
+                                <span class="chevron left light"></span>
+                            </a>
+                        </li>
+                        <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
+
+                        <li class="pagination-li">
+                            <a th:if="${reportsSlice.hasNext()}" th:href="'/localreports?page=' + (${reportsSlice.getNumber()} + 2)">
+                                <span class="chevron right"></span>
+                            </a>
+                            <a th:if="${reportsSlice.isLast()}" class="pagination-li">
+                                <span class="chevron right light"></span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
