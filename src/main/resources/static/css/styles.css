@@ -257,7 +257,7 @@ textarea.form-control {
 /* the about page */
 .about {
     display: flex;
-    justify-contents: space-between;
+    justify-content: space-between;
     padding: 10px 70px;
 }
 .about-text {
@@ -352,4 +352,13 @@ textarea.form-control {
 .pg-current {
     padding-left:15px;
     padding-right: 15px;
+}
+
+.sort-options {
+    display: flex;
+    justify-content: center;
+}
+
+.form-group {
+    margin: 0px 10px;
 }

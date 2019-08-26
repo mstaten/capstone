@@ -36,13 +36,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception  {
         http
                 .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/resources", "/static/**", "/images/**", "/css/**", "/js/**",
                                     "/register", "/unauthorized", "/", "/report/*", "/report/list/**",
-                                    "/localreports", "/localreports/**").permitAll()
+                                    "/localreports", "/localreports/**", "/about").permitAll()
                     //.antMatchers("/unauthorized/**").hasRole("USER")
                     //.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
@@ -72,16 +72,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth
-                .inMemoryAuthentication()
-                    .passwordEncoder(passwordEncoder())
-                    .withUser("user")
-                        .password((passwordEncoder().encode("user")))
-                        .roles("USER")
-                        .and()
-                    .withUser("admin")
-                        .password(passwordEncoder().encode("admin"))
-                        .roles("ADMIN");*/
         auth.authenticationProvider(authProvider());
     }
 
@@ -100,14 +90,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
-    /*
-    @Bean
-    public AuthenticationFailureHandler customAuthenticationHandler(){
-        return new CustomAuthenticationFailureHandler();
-    }
-
-    }
-*/
 
     @Bean
     public SpringSecurityDialect springSecurityDialect() {
@@ -121,16 +103,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
     }
-
-    /*@Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-
-        List<UserDetails> users = new ArrayList<>();
-        users.add(User.withUsername("user").password("1234").roles("USER").build());
-
-        return new InMemoryUserDetailsManager(users);
-    }*/
 
 
 }

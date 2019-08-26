@@ -48,9 +48,35 @@
                 <div class="center">
                     <h3>All Reports</h3>
                 </div>
+                <div class="sort-options">
+                    <form method="post" action="/localreports" class="form-inline">
+
+                        <div class="form-group my-2 my-lg-0">
+                            <label for="sort" class="mr-sm-2" hidden="true">Sort by </label>
+                            <select id="sort" name="sort" class="form-control ">
+                                <option selected="" value="">Sort by</option>
+                                <option value="zonedDateTime">Date</option>
+                                <option value="urgency">Urgency</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group my-2 my-lg-0">
+                            <label for="order" class="mr-sm-2" hidden="true">Order by</label>
+                            <select id="order" name="order" class="form-control">
+                                <option selected="" value="">Order by</option>
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
                 <div class="tab-main">
-                    <div th:if="${reportList} and ${reportList.size()}"
-                         th:each="report : ${reportList}"
+                    <div th:if="${reportsSlice} and ${reportsSlice.hasContent()}"
+                         th:each="report : ${reportsSlice}"
                          th:id="${report.location.latLng}" class="card border-secondary">
 
                         <!-- report header -->
@@ -66,7 +92,7 @@
                         <!-- report body -->
                         <div class="report-body">
                             <p th:text="${report.getFormattedZonedDateTime()}" class="datetime"></p>
-                            <p th:text="${report.location.latLng}"></p>
+                            <p th:text="${report.location.latLng}" hidden="hidden"></p>
                             <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
                         </div>
                     </div>
@@ -76,7 +102,7 @@
             <!-- Submit Report Tab -->
             <div class="tab-pane fade fill-container" id="submitReport">
 
-                <form method="post" th:object="${report}">
+                <form method="post" action="/submitreport" th:object="${report}">
                     <div class="center">
                         <h3>Submit a Report</h3>
                         <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
