@@ -14,7 +14,7 @@
 
         <!-- Nav bar specifically for map page -->
         <div class="map-nav-bar btn-group">
-            <span class="form-inline my-2 my-lg-0">
+            <span class="form-inline my-2 my-lg-0 search">
                 <input class="form-control mr-sm-2" id="search" type="text" placeholder="Search by location..." />
             </span>
             <button id="loadLocations" class="btn nav-link">View all locations</button>
@@ -33,7 +33,7 @@
 
         <!-- Map -->
         <div class="map-container">
-            <div id="map" style="width:680px;height:420px;"></div>
+            <div id="map"></div>
             <div id="infowindow-content" class="text-primary">
                 <span id="info-title"></span>
                 <span id="info-urgency" class="text-danger float-right"></span><br/>
@@ -42,8 +42,8 @@
         </div>
 
         <!-- Begin Tab Content -->
-        <div id="myTabContent" class="submit-form-container tab-content">
-            <!-- Report List Tab -->
+        <div id="tabContent" class="tab-content">
+            <!-- View Reports Tab -->
             <div class="tab-pane fade active show fill-container" id="viewReports">
                 <div class="center">
                     <h3>All Reports</h3>
@@ -183,13 +183,12 @@
 
     </div>
     <div> <!-- Steps to Submit Report -->
-        <div class="">
+        <div>
             <span class="indent">Steps to submit a report</span>
-            <div class="">
+            <div>
                 <ol class="">
                     <li>Select "Submit Report" tab</li>
-                    <li>Enter location in the search bar</li>
-                    <li>Drop a pin on the map</li>
+                    <li>Drop a pin on the map (or enter location in the search bar)</li>
                     <li>Fill out report title &amp; description</li>
                     <li>Select the level of urgency</li>
                     <li>Hit Submit!</li>

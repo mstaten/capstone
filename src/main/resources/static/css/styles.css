@@ -12,6 +12,7 @@
     position: relative;
     max-height: 755px;
     margin: auto;
+    justify-items: center;
     grid-auto-columns: repeat(6, 1fr);
     grid-auto-rows: 1fr 3fr 3fr 1fr;
     grid-template-areas:    "nav    nav     nav     nav     nav     nav"
@@ -23,10 +24,12 @@
 /* grid areas */
 .nav-bar {
     grid-area: nav;
+    width: 100%;
 }
 
 .main {
     grid-area: main;
+    width: 100%;
 }
 
 .footer {
@@ -92,17 +95,12 @@ img {
     color: #ff9933;
 }
 
-/*.main, .side-bar, .footer {
-    border: 2px solid #f76707;
-    border-radius: 5px;
-}*/
-
 .general {
+    width: 95%;
     margin: 15px 40px;
     text-decoration: none;
-
-
-    /*max-width: 700px;*/
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-sm {
@@ -116,20 +114,116 @@ img {
     }
 }
 
+/* styles for map page */
 .map-page {
     display: flex;
     justify-content: space-between;
 }
 
-.map-container, .submit-form-container {
+.map-container {
     margin: 10px 10px 10px 0px;
+    width: 50%;
 }
 
-.submit-form-container {
+#map{
+    width:100%;
+    height:450px;
+}
+
+/* for info window content on map */
+#infowindow-content {
+    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.2em;
+}
+
+#info-title {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+#info-urgency {
+    font-style: italic;
+}
+
+#info-description {
+    font-size: 0.85em;
+}
+
+/* nav bar specifically for map page */
+#search {
+    width: 300px;
+}
+
+.map-nav-bar {
+    height: 50px;
+    width: 100%;
+}
+
+.map-nav-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-tabs {
+    width: 280px;
+    display: flex;
+    border-bottom: none;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+nav.nav-tabs {
+    min-width: 280px;
+}
+
+.nav-item {
+    padding: 0px;
+    margin: 0px;
+}
+
+#toggle-left {
+    border: 1px solid #333333;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-right: 0px;
+}
+
+#toggle-right {
+    border: 1px solid #333333;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+/* delete */
+.map-toggle {
+    background-color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0px 18px;
+    height: 100%    ;
+    cursor: pointer;
+    outline: none;
+    padding-top: 0.8em;
+    padding-bottom: 0.4em;
+    text-align: center;
+}
+
+/* delete */
+.map-toggle-btn {
+    border-style: none;
+    width: 160px;
+    padding-top: 0.4em;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* tab content on map page*/
+#tabContent {
     display: flex;
     align-items: center;
-    max-width: 40%;
-    min-width: 400px;
+    max-width: 45%;
+    min-width: 300px;
 }
 
 .tab-main {
@@ -150,76 +244,6 @@ img {
     margin: 5px;
 }
 
-#toggle-left {
-    border: 1px solid #333333;
-    border-top-left-radius: 18px;
-    border-bottom-left-radius: 18px;
-    border-right: 0px;
-}
-
-#toggle-right {
-    border: 1px solid #333333;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-}
-
-.nav-tabs {
-    width: 280px;
-    display: flex;
-    border-bottom: none;
-    justify-content: center;
-    margin-bottom: 10px;
-    margin-right: 10px;
-}
-
-.nav-item {
-    padding: 0px;
-    margin: 0px;
-}
-
-.map-toggle {
-    background-color: #fff;
-    font-weight: 400;
-    font-size: 14px;
-    padding: 0px 18px;
-    height: 100%    ;
-    cursor: pointer;
-    outline: none;
-    padding-top: 0.8em;
-    padding-bottom: 0.4em;
-    text-align: center;
-}
-
-.map-toggle-btn {
-    border-style: none;
-    width: 160px;
-    padding-top: 0.4em;
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-#search {
-    width: 300px;
-}
-
-.map-nav-bar {
-    height: 50px;
-    width: 100%;
-}
-
-.map-nav-bar.btn-group {
-
-}
-
-.map-nav-btn {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.btn-outline {
-    border-color: #919aa1;
-    color: #919aa1;
-}
 
 textarea.form-control {
     height: 100px;
@@ -254,7 +278,7 @@ textarea.form-control {
     color: inherit;
 }
 
-/* the about page */
+/* the "about" page */
 .about {
     display: flex;
     justify-content: space-between;
@@ -270,9 +294,6 @@ textarea.form-control {
     letter-spacing: .6px;
     padding-bottom: 20px;
 }
-.about-p span {
-
-}
 
 .about-list div {
     padding-bottom: 20px;
@@ -284,25 +305,6 @@ textarea.form-control {
 
 .indent {
     padding-left: 20px;
-}
-
-/* for info window content on map */
-#infowindow-content {
-    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    line-height: 1.2em;
-}
-
-#info-title {
-    font-weight: 700;
-    font-size: 1.2em;
-}
-
-#info-urgency {
-    font-style: italic;
-}
-
-#info-description {
-    font-size: 0.85em;
 }
 
 /* pagination styles */
