@@ -80,7 +80,7 @@ public class MainController {
                                          @RequestParam String order,
                                          HttpServletRequest request,
                                          Model model) {
-
+        // need something here to keep track of sort and order when i turn a page
         Slice<Report> reportsSlice = processSortButton(sort, order, request);
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("locations", locationDao.findAll());
@@ -105,12 +105,14 @@ public class MainController {
         return "/reportList";
     }
 
-    @PostMapping(value = "report/list")
+    @GetMapping(value = "report/list/sort")
     public String displayReportList(@RequestParam String sort, @RequestParam String order,
                                     HttpServletRequest request, Model model) {
 
         Slice<Report> reportsSlice = processSortButton(sort, order, request);
         model.addAttribute("reportsSlice", reportsSlice);
+        model.addAttribute("sort", sort);
+        model.addAttribute("order", order);
         model.addAttribute("title", "All Reports");
         return "/reportList";
     }
@@ -127,7 +129,7 @@ public class MainController {
         }
 
         int pageNumber = getPageNumber(request);
-        Pageable pageable = new PageRequest(pageNumber,3);
+        Pageable pageable = new PageRequest(pageNumber,7);
 
         // get reports by this user
         Slice<Report> reportsSlice = reportDao.findAllByUser(user, pageable);
@@ -211,10 +213,25 @@ public class MainController {
 
         // if query exists, use query parameter as pageNumber
         if (request.getQueryString() != null) {
-            String queryString = request.getQueryString();
-            int equalsIndex = queryString.indexOf("=");
-            String pageNumberStr = queryString.substring(equalsIndex + 1); // get number from string
-            pageNumber = Integer.parseInt(pageNumberStr) - 1;
+
+            String queryString = request.getQueryString();  // get query string
+            int startIndex = queryString.indexOf("page=");  // get index of page param
+
+            if (startIndex != -1) {     // if there is indeed a page param in queryString
+
+                // querySubstring contains page number and anything after it (+5 for "page=")
+                String querySubstring = queryString.substring(startIndex + 5);
+
+                int endIndex = querySubstring.indexOf("&"); // if there is another param after page
+
+                String pageNumberStr;
+                if (endIndex != -1) {   // if there is indeed a param after page
+                    pageNumberStr = querySubstring.substring(0, endIndex);
+                } else {                // if there's no param after page
+                    pageNumberStr = querySubstring;
+                }
+                pageNumber = Integer.parseInt(pageNumberStr) - 1;   // parse int
+            }
         }
 
         return pageNumber;

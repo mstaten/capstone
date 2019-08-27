@@ -15,7 +15,7 @@
         <p th:unless="${reportsSlice} and ${reportsSlice.hasContent()}">There are no reports to show</p>
 
         <div class="sort-options">
-            <form method="post" class="form-inline ">
+            <form th:action="@{/report/list/sort}" class="form-inline ">
 
                 <div class="form-group my-2 my-lg-0">
                     <label for="sort" class="mr-sm-2" hidden="true">Sort by </label>
@@ -43,19 +43,34 @@
 
         <ul th:if="${reportsSlice}" class="pagination-ul top">
             <li class="pagination-li">
-                <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
-                    <span class="chevron left"></span>
-                </a>
+                <span th:if="${reportsSlice.hasPrevious()}">
+                    <span th:if="${sort}">
+                        <a th:href="'/report/list/sort?page=' + ${reportsSlice.getNumber()} + '&amp;sort=' + ${sort} + '&amp;order=' + ${order}">
+                            <span class="chevron left"></span>
+                        </a>
+                    </span>
+                    <a th:unless="${sort}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+                        <span class="chevron left"></span>
+                    </a>
+                </span>
                 <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
                     <span class="chevron left light"></span>
                 </a>
             </li>
+
             <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
 
             <li class="pagination-li">
-                <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
-                    <span class="chevron right"></span>
-                </a>
+                <span th:if="${reportsSlice.hasNext()}">
+                    <span th:if="${sort}">
+                        <a th:href="'/report/list/sort?page=' + (${reportsSlice.getNumber()} + 2) + '&amp;sort=' + ${sort} + '&amp;order=' + ${order}">
+                            <span class="chevron right"></span>
+                        </a>
+                    </span>
+                    <a th:unless="${sort}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+                        <span class="chevron right"></span>
+                    </a>
+                </span>
                 <a th:if="${reportsSlice.isLast()}" class="pagination-li">
                     <span class="chevron right light"></span>
                 </a>
@@ -84,19 +99,34 @@
 
         <ul th:if="${reportsSlice}" class="pagination-ul bottom">
             <li class="pagination-li">
-                <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
-                    <span class="chevron left"></span>
-                </a>
+                <span th:if="${reportsSlice.hasPrevious()}">
+                    <span th:if="${sort}">
+                        <a th:href="'/report/list/sort?page=' + ${reportsSlice.getNumber()} + '&amp;sort=' + ${sort} + '&amp;order=' + ${order}">
+                            <span class="chevron left"></span>
+                        </a>
+                    </span>
+                    <a th:unless="${sort}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+                        <span class="chevron left"></span>
+                    </a>
+                </span>
                 <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
                     <span class="chevron left light"></span>
                 </a>
             </li>
+
             <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
 
             <li class="pagination-li">
-                <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
-                    <span class="chevron right"></span>
-                </a>
+                <span th:if="${reportsSlice.hasNext()}">
+                    <span th:if="${sort}">
+                        <a th:href="'/report/list/sort?page=' + (${reportsSlice.getNumber()} + 2) + '&amp;sort=' + ${sort} + '&amp;order=' + ${order}">
+                            <span class="chevron right"></span>
+                        </a>
+                    </span>
+                    <a th:unless="${sort}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+                        <span class="chevron right"></span>
+                    </a>
+                </span>
                 <a th:if="${reportsSlice.isLast()}" class="pagination-li">
                     <span class="chevron right light"></span>
                 </a>

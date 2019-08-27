@@ -16,7 +16,7 @@
 
     <ul th:if="${reportsSlice}" class="pagination-ul top">
         <li class="pagination-li">
-            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/' + ${username} +'?page=' + (${reportsSlice.getNumber()})">
                 <span class="chevron left"></span>
             </a>
             <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
@@ -26,7 +26,7 @@
         <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
 
         <li class="pagination-li">
-            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/' + ${username} + '?page=' + (${reportsSlice.getNumber()} + 2)">
                 <span class="chevron right"></span>
             </a>
             <a th:if="${reportsSlice.isLast()}" class="pagination-li">
@@ -55,9 +55,9 @@
         </div>
     </div>
 
-    <ul th:if="${reportsSlice}" class="pagination-ul top">
+    <ul th:if="${reportsSlice}" class="pagination-ul bottom">
         <li class="pagination-li">
-            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()})">
+            <a th:if="${reportsSlice.hasPrevious()}" th:href="'/report/list/' + ${username} +'?page=' + (${reportsSlice.getNumber()})">
                 <span class="chevron left"></span>
             </a>
             <a th:if="${reportsSlice.isFirst()}" class="pagination-li">
@@ -67,7 +67,7 @@
         <li th:text="${reportsSlice.getNumber()} + 1" class="pagination-li pg-current">Current</li>
 
         <li class="pagination-li">
-            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/?page=' + (${reportsSlice.getNumber()} + 2)">
+            <a th:if="${reportsSlice.hasNext()}" th:href="'/report/list/' + ${username} + '?page=' + (${reportsSlice.getNumber()} + 2)">
                 <span class="chevron right"></span>
             </a>
             <a th:if="${reportsSlice.isLast()}" class="pagination-li">
