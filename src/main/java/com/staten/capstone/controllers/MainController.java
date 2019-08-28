@@ -75,7 +75,7 @@ public class MainController {
         return "redirect:/report/" + report.getId();
     }
 
-    @PostMapping(value = "localreports")
+    @GetMapping(value = "localreports/sort")
     public String displayMapPageAndSorts(@RequestParam String sort,
                                          @RequestParam String order,
                                          HttpServletRequest request,
@@ -84,6 +84,8 @@ public class MainController {
         Slice<Report> reportsSlice = processSortButton(sort, order, request);
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("locations", locationDao.findAll());
+        model.addAttribute("sort", sort);
+        model.addAttribute("order", order);
         model.addAttribute(new Report());   // for submitting a report on this page
         return "map";
     }
