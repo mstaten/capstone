@@ -43,7 +43,7 @@ public class MainController {
     @GetMapping(value = "localreports")
     public String displayMapPage(HttpServletRequest request, Model model) {
 
-        Slice<Report> reportsSlice = processSortButton("", "",request);
+        Slice<Report> reportsSlice = processSortButton("", "", request);
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("locations", locationDao.findAll());
         model.addAttribute(new Report());   // for submitting a report on this page
@@ -131,7 +131,7 @@ public class MainController {
         }
 
         int pageNumber = getPageNumber(request);
-        Pageable pageable = new PageRequest(pageNumber,7);
+        Pageable pageable = new PageRequest(pageNumber,4);
 
         // get reports by this user
         Slice<Report> reportsSlice = reportDao.findAllByUser(user, pageable);
@@ -209,38 +209,21 @@ public class MainController {
     // UTIL
 
     // method to get desired page number from the view
-    public int getPageNumber(HttpServletRequest request) {
+    private int getPageNumber(HttpServletRequest request) {
 
         int pageNumber = 0; // default page number
 
-        // if query exists, use query parameter as pageNumber
-        if (request.getQueryString() != null) {
+        String pageParam = request.getParameter("page");
 
-            String queryString = request.getQueryString();  // get query string
-            int startIndex = queryString.indexOf("page=");  // get index of page param
-
-            if (startIndex != -1) {     // if there is indeed a page param in queryString
-
-                // querySubstring contains page number and anything after it (+5 for "page=")
-                String querySubstring = queryString.substring(startIndex + 5);
-
-                int endIndex = querySubstring.indexOf("&"); // if there is another param after page
-
-                String pageNumberStr;
-                if (endIndex != -1) {   // if there is indeed a param after page
-                    pageNumberStr = querySubstring.substring(0, endIndex);
-                } else {                // if there's no param after page
-                    pageNumberStr = querySubstring;
-                }
-                pageNumber = Integer.parseInt(pageNumberStr) - 1;   // parse int
-            }
+        if (pageParam != null) {
+            pageNumber = Integer.parseInt(pageParam) - 1;
         }
 
         return pageNumber;
     }
 
     // process sort button values, return Slice<Report>
-    public Slice<Report> processSortButton(String sort, String order,
+    private Slice<Report> processSortButton(String sort, String order,
                                            HttpServletRequest request) {
         Pageable pageable;
         int pageNumber = getPageNumber(request);
@@ -255,12 +238,12 @@ public class MainController {
 
         // create pageable object w/ user-selected sort & order values
         if (order.equals("asc")) {
-            pageable = new PageRequest(pageNumber, 7, new Sort(Sort.Direction.ASC, sort));
+            pageable = new PageRequest(pageNumber, 4, new Sort(Sort.Direction.ASC, sort));
         } else {
-            pageable = new PageRequest(pageNumber, 7, new Sort(Sort.Direction.DESC, sort));
+            pageable = new PageRequest(pageNumber, 4, new Sort(Sort.Direction.DESC, sort));
         }
 
-        // get all reports, 7 per page
+        // get all reports, 4 per page
         return reportDao.findAll(pageable);
     }
 
