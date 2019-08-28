@@ -121,6 +121,9 @@ img {
 }
 
 .map-container {
+    display: flex;
+    align-items: center;
+    justify-items: space-between;
     margin: 10px 10px 10px 0px;
     width: 50%;
 }
@@ -222,13 +225,16 @@ nav.nav-tabs {
 #tabContent {
     display: flex;
     align-items: center;
-    max-width: 45%;
-    min-width: 300px;
+    justify-items: space-between;
+    width: 45%;
+    height: 450px;
+
 }
 
 .tab-main {
     margin-top: 10px;
-    height: 410px;
+    height: 300px;
+    width: 100%;
     overflow: scroll;
 }
 
