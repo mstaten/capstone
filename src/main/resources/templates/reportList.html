@@ -19,24 +19,28 @@
 
                 <div class="form-group my-2 my-lg-0">
                     <label for="sort" class="mr-sm-2" hidden="true">Sort by </label>
-                    <select id="sort" name="sort" class="form-control">
-                        <option selected="" value="">Sort by</option>
-                        <option value="zonedDateTime">Date</option>
-                        <option value="urgency">Urgency</option>
-                    </select>
+                    <div class="no-border fill-container">
+                        <select id="sort" name="sort" class="form-control ">
+                            <option selected="" value="">Sort by</option>
+                            <option value="zonedDateTime">Date</option>
+                            <option value="urgency">Urgency</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form-group my-2 my-lg-0">
                     <label for="order" class="mr-sm-2" hidden="true">Order by</label>
-                    <select id="order" name="order" class="form-control">
-                        <option selected="" value="">Order by</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
+                    <div class="no-border fill-container">
+                        <select id="order" name="order" class="form-control">
+                            <option selected="" value="">Order by</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="">
-                    <button type="submit" class="btn btn-primary">Sort</button>
+                    <button type="submit" class="btn btn-primary sort">Sort</button>
                 </div>
             </form>
         </div>

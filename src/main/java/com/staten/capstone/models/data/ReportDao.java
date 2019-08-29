@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -16,7 +17,7 @@ public interface ReportDao extends PagingAndSortingRepository<Report, Integer> {
 
     Report findById(int id);
 
-    Slice<Report> findAll(Sort sort);
+    List<Report> findAll(Sort sort);
 
     Slice<Report> findAllByUser(User user, Pageable pageable);
 
