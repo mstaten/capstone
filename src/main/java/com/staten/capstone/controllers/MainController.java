@@ -51,7 +51,7 @@ public class MainController {
         return "map";
     }
 
-    @GetMapping(value = "localreports/sort")
+    @PostMapping(value = "localreports")
     public String displayMapPageAndSorts(@RequestParam String sort,
                                          @RequestParam String order,
                                          Model model) {
@@ -63,7 +63,7 @@ public class MainController {
         return "map";
     }
 
-    @PostMapping(value = "localreports/submit")
+    @PostMapping(value = "submitreport")
     public String processReportForm(@ModelAttribute @Valid Report report,
                                     Errors errors, Model model,
                                     @RequestParam String newLocation,
