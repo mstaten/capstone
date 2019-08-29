@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -41,16 +42,28 @@ public class MainController {
     }
 
     @GetMapping(value = "localreports")
-    public String displayMapPage(HttpServletRequest request, Model model) {
+    public String displayMapPage(Model model) {
 
-        Slice<Report> reportsSlice = processSortButton("", "", request);
-        model.addAttribute("reportsSlice", reportsSlice);
+        List<Report> reportList = processSortButton("", "");
+        model.addAttribute("reportList", reportList);
         model.addAttribute("locations", locationDao.findAll());
         model.addAttribute(new Report());   // for submitting a report on this page
         return "map";
     }
 
-    @PostMapping(value = "submitreport")
+    @GetMapping(value = "localreports/sort")
+    public String displayMapPageAndSorts(@RequestParam String sort,
+                                         @RequestParam String order,
+                                         Model model) {
+
+        List<Report> reportList = processSortButton(sort, order);
+        model.addAttribute("reportList", reportList);
+        model.addAttribute("locations", locationDao.findAll());
+        model.addAttribute(new Report());   // for submitting a report on this page
+        return "map";
+    }
+
+    @PostMapping(value = "localreports/submit")
     public String processReportForm(@ModelAttribute @Valid Report report,
                                     Errors errors, Model model,
                                     @RequestParam String newLocation,
@@ -75,20 +88,7 @@ public class MainController {
         return "redirect:/report/" + report.getId();
     }
 
-    @GetMapping(value = "localreports/sort")
-    public String displayMapPageAndSorts(@RequestParam String sort,
-                                         @RequestParam String order,
-                                         HttpServletRequest request,
-                                         Model model) {
-        // need something here to keep track of sort and order when i turn a page
-        Slice<Report> reportsSlice = processSortButton(sort, order, request);
-        model.addAttribute("reportsSlice", reportsSlice);
-        model.addAttribute("locations", locationDao.findAll());
-        model.addAttribute("sort", sort);
-        model.addAttribute("order", order);
-        model.addAttribute(new Report());   // for submitting a report on this page
-        return "map";
-    }
+
 
     @GetMapping(value = "report/{id}")
     public String displayOneReport(@PathVariable int id, Model model) {
@@ -131,7 +131,7 @@ public class MainController {
         }
 
         int pageNumber = getPageNumber(request);
-        Pageable pageable = new PageRequest(pageNumber,4);
+        Pageable pageable = new PageRequest(pageNumber,3);
 
         // get reports by this user
         Slice<Report> reportsSlice = reportDao.findAllByUser(user, pageable);
@@ -222,6 +222,20 @@ public class MainController {
         return pageNumber;
     }
 
+    // process sort button values, return List<Report>, no pagination
+    private List<Report> processSortButton(String sort, String order) {
+
+        // default values: if user clicked search btn but didn't change value
+        if (sort.equals("")) {
+            sort = "zonedDateTime";
+        }
+
+        if (order.equals("desc")) {
+            return reportDao.findAll(new Sort(Sort.Direction.DESC, sort));
+        }
+        return reportDao.findAll(new Sort(Sort.Direction.ASC, sort));
+    }
+
     // process sort button values, return Slice<Report>
     private Slice<Report> processSortButton(String sort, String order,
                                            HttpServletRequest request) {
@@ -238,12 +252,12 @@ public class MainController {
 
         // create pageable object w/ user-selected sort & order values
         if (order.equals("asc")) {
-            pageable = new PageRequest(pageNumber, 4, new Sort(Sort.Direction.ASC, sort));
+            pageable = new PageRequest(pageNumber, 3, new Sort(Sort.Direction.ASC, sort));
         } else {
-            pageable = new PageRequest(pageNumber, 4, new Sort(Sort.Direction.DESC, sort));
+            pageable = new PageRequest(pageNumber, 3, new Sort(Sort.Direction.DESC, sort));
         }
 
-        // get all reports, 4 per page
+        // get all reports, 3 per page
         return reportDao.findAll(pageable);
     }
 
