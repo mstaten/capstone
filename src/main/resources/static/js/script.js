@@ -6,11 +6,11 @@ var givenMarkers = [];
 var infoWindows = [];
 
 function createMap() {
-    var origin = {lat: 41.881832, lng: -87.623177};
+    var origin = {lat: 38.626090, lng: -90.220173};
 
     var options = {
         center: origin,
-        zoom: 10
+        zoom: 11
     };
 
     map = new google.maps.Map(document.getElementById('map'), options);
@@ -26,8 +26,7 @@ function createMap() {
 
     // load button
     window.onload = function() {
-        var btn = document.getElementById('loadLocations');
-        btn.onclick = displayGivenLocations;
+        displayGivenLocations();
     }
 
     // enable searchBox
