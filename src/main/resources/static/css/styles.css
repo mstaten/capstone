@@ -1,3 +1,8 @@
+.title {
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
 .invalid-feedback.error {
     display: inline;
     font-size: 1em;
@@ -299,7 +304,7 @@ textarea.form-control {
 .about {
     display: flex;
     justify-content: space-between;
-    padding: 10px 70px;
+    padding: 0px 70px 20px 70px;
 }
 .about-text {
     width: 60%;
@@ -387,4 +392,13 @@ textarea.form-control {
 
 .form-group {
     margin: 0px 10px;
+}
+
+/* styles for one-report page */
+.flexit {
+    display: flex;
+    justify-content: center;
+}
+
+.reports, .account {
 }

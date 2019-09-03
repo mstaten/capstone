@@ -9,31 +9,78 @@
 
     <div class="main general">
 
-        <h1 th:text="${title}" class="center">Default Title</h1>
+        <h1 th:text="${title}" class="title center">Default Title</h1>
 
         <div class="contents reports">
-            <div class="card border-primary mb-3 report" style="max-width: 20rem;">
-                <div class="card-header">
-                    <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
-                    <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
-                </div>
-                <div class="card-body">
-                    <h4 th:text="${report.title}" class="card-title">Title</h4>
-                    <p th:text="${report.getFormattedDateTime()}"></p>
-                    <p th:text="${report.description}" class="card-text">Body</p>
-                    <p th:if="${report.lastEdit}">Updated: <span th:text="${report.getFormattedLastEdit()}"></span></p>
 
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="tab-content flexit">
+                <div>
+                    <div class="card border-primary mb-3 report" style="width: 500px;">
+                        <div class="card-header">
+                            <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                            <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
+                        </div>
+                        <div class="card-body">
+                            <h4 th:text="${report.title}" class="card-title">Title</h4>
+                            <p th:text="${report.getFormattedDateTime()}"></p>
+                            <p hidden="hidden"><span id="location" th:text="${report.location.latLng}"></span></p>
+                            <p th:text="${report.description}" class="card-text">Body</p>
+                            <p th:if="${report.lastEdit}">Updated: <span th:text="${report.getFormattedLastEdit()}"></span></p>
+                        </div>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class="center"
+                         th:if="${#authentication.getPrincipal().getId()} == ${report.user.id}">
+                        <em><a th:href="@{'/report/edit/' + ${report.id}}" class="center my-link">Edit</a></em>
+                    </div>
                 </div>
             </div>
+
         </div>
-        <div sec:authorize="isAuthenticated()" class="center"
-             th:if="${#authentication.getPrincipal().getId()} == ${report.user.id}">
-            <em><a th:href="@{'/report/edit/' + ${report.id}}" class="center my-link">Edit</a></em>
-        </div>
+
     </div>
 
     <span th:replace="fragments :: auth"></span>
 
 </body>
 <span th:replace="fragments :: script"></span>
+
+<!-- Google Maps scripts -->
+<script>
+    var map;
+
+function createMap() {
+    var coordinates = document.getElementById('location');
+    var stringLatLng = coordinates.innerText;
+    var convertedLatLng = convertCoords(stringLatLng);
+    var origin = {lat: convertedLatLng.lat, lng: convertedLatLng.lng};
+    var options = {
+        center: origin,
+        zoom: 14
+    };
+
+    map = new google.maps.Map(document.getElementById('map'), options);
+    addMarker(convertedLatLng);
+}
+
+// convert coords to appropriate LatLng style
+function convertCoords(coords) {
+    var n = coords.indexOf(',');        // find break in the string between lat and lng
+    var myLat = parseFloat(coords.substring(1,n));
+    var myLng = parseFloat(coords.substring(n+1, coords.length-1));
+    var myLatLng = {lat: myLat, lng: myLng};
+    return myLatLng;
+}
+function addMarker(coords) {
+    var marker = new google.maps.Marker({
+        position: coords,
+        map: map
+    });
+}
+</script>
+<div th:replace="mapkey :: map-key"></div>
+
 </html>

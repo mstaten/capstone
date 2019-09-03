@@ -1,5 +1,3 @@
-/* script 4 */
-
 var map;
 var newMarkers = [];
 var givenMarkers = [];

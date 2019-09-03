@@ -10,7 +10,7 @@
 
     <div class="main general">
 
-        <h1 th:text="${title}" class="center">Default Title</h1>
+        <h1 th:text="${title}" class="title center">Default Title</h1>
 
         <p th:unless="${reportsSlice} and ${reportsSlice.hasContent()}" class="center">There are no reports to show</p>
 
@@ -85,7 +85,7 @@
             <div th:if="${reportsSlice} and ${reportsSlice.hasContent()}">
                 <div th:each="report : ${reportsSlice.getContent()}"
                      class="card border-primary mb-3 report"
-                     style="max-width: 20rem;">
+                     style="width: 500px;">
                     <div class="card-header">
                         <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
                         <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
