@@ -17,7 +17,7 @@ public class Report {
     private Integer id;
 
     @NotNull
-    @Size(min = 3, max = 60, message = "Title must be between 3 and 60 characters")
+    @Size(min = 3, max = 40, message = "Title must be between 3 and 40 characters")
     private String title;
 
     @NotNull
@@ -27,10 +27,11 @@ public class Report {
     @ManyToOne
     private User user;
 
-    private ZonedDateTime zonedDateTime;
+    private ZonedDateTime dateTime;
 
     private ZonedDateTime lastEdit;
 
+    @NotNull // new req, test
     private Integer urgency;
 
     @OneToOne
@@ -38,24 +39,24 @@ public class Report {
     private Location location;
 
     public Report() {
-        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+        this.dateTime = ZonedDateTime.now(ZoneId.systemDefault());
     }
 
     public Report(String title, String description) {
-        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+        this.dateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.title = title;
         this.description = description;
     }
 
     public Report(String title, String description, User user) {
-        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+        this.dateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.title = title;
         this.description = description;
         this.user = user;
     }
 
     public Report(User user) {
-        this.zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+        this.dateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.user = user;
     }
 
@@ -88,11 +89,11 @@ public class Report {
     }
 
     public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
+        return dateTime;
     }
 
     public void setZonedDateTime(ZonedDateTime zonedDateTime) {
-        this.zonedDateTime = zonedDateTime;
+        this.dateTime = zonedDateTime;
     }
 
     public ZonedDateTime getLastEdit() {
@@ -120,8 +121,8 @@ public class Report {
     }
 
     /* Other methods */
-    public String getFormattedZonedDateTime() {
-        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(zonedDateTime);
+    public String getFormattedDateTime() {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(dateTime);
     }
 
     public String getFormattedLastEdit() {

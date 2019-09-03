@@ -12,9 +12,9 @@
 
         <h1 th:text="${title}" class="center">Default Title</h1>
 
-        <p th:unless="${reportsSlice} and ${reportsSlice.hasContent()}">There are no reports to show</p>
+        <p th:unless="${reportsSlice} and ${reportsSlice.hasContent()}" class="center">There are no reports to show</p>
 
-        <div class="sort-options">
+        <div class="sort-options" th:if="${reportsSlice} and ${reportsSlice.hasContent()}">
             <form th:action="@{/report/list/sort}" class="form-inline ">
 
                 <div class="form-group my-2 my-lg-0">
@@ -22,7 +22,7 @@
                     <div class="no-border fill-container">
                         <select id="sort" name="sort" class="form-control ">
                             <option selected="" value="">Sort by</option>
-                            <option value="zonedDateTime">Date</option>
+                            <option value="dateTime">Date</option>
                             <option value="urgency">Urgency</option>
                         </select>
                     </div>
@@ -45,7 +45,7 @@
             </form>
         </div>
 
-        <ul th:if="${reportsSlice}" class="pagination-ul top">
+        <ul th:if="${reportsSlice} and ${reportsSlice.hasContent()}" class="pagination-ul top">
             <li class="pagination-li">
                 <span th:if="${reportsSlice.hasPrevious()}">
                     <span th:if="${sort}">
@@ -94,14 +94,14 @@
                     <h4 class="card-title">
                         <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
                     </h4>
-                    <p th:text="${report.getFormattedZonedDateTime()}"></p>
+                    <p th:text="${report.getFormattedDateTime()}"></p>
                     <p th:text="${report.description}" class="card-text">Body</p>
                 </div>
                 </div>
             </div>
         </div>
 
-        <ul th:if="${reportsSlice}" class="pagination-ul bottom">
+        <ul th:if="${reportsSlice} and ${reportsSlice.hasContent()}" class="pagination-ul bottom">
             <li class="pagination-li">
                 <span th:if="${reportsSlice.hasPrevious()}">
                     <span th:if="${sort}">

@@ -52,7 +52,7 @@
                             <div class="no-border">
                                 <select id="sort" name="sort" class="form-control ">
                                     <option selected="" value="">Sort by</option>
-                                    <option value="zonedDateTime">Date</option>
+                                    <option value="dateTime">Date</option>
                                     <option value="urgency">Urgency</option>
                                 </select>
                             </div>
@@ -91,10 +91,13 @@
 
                         <!-- report body -->
                         <div class="report-body">
-                            <p th:text="${report.getFormattedZonedDateTime()}" class="datetime"></p>
+                            <p th:text="${report.getFormattedDateTime()}" class="dateTime"></p>
                             <p th:text="${report.location.latLng}" hidden="hidden"></p>
                             <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
                         </div>
+                    </div>
+                    <div th:unless="${reportList} and ${reportList.size()}" class="center">
+                        <p>No reports yet. Add one!</p>
                     </div>
                 </div>
             </div>

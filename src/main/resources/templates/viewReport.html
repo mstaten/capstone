@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body">
                     <h4 th:text="${report.title}" class="card-title">Title</h4>
-                    <p th:text="${report.getFormattedZonedDateTime()}"></p>
+                    <p th:text="${report.getFormattedDateTime()}"></p>
                     <p th:text="${report.description}" class="card-text">Body</p>
                     <p th:if="${report.lastEdit}">Updated: <span th:text="${report.getFormattedLastEdit()}"></span></p>
 

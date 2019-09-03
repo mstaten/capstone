@@ -37,6 +37,7 @@ public class MainController {
 
     @GetMapping(value = "")
     public String index(Model model) {
+
         model.addAttribute("title", "Local Reports");
         return "index";
     }
@@ -47,7 +48,7 @@ public class MainController {
         List<Report> reportList = processSortButton("", "");
         model.addAttribute("reportList", reportList);
         model.addAttribute("locations", locationDao.findAll());
-        model.addAttribute(new Report());   // for submitting a report on this page
+        model.addAttribute(new Report());
         return "map";
     }
 
@@ -59,7 +60,7 @@ public class MainController {
         List<Report> reportList = processSortButton(sort, order);
         model.addAttribute("reportList", reportList);
         model.addAttribute("locations", locationDao.findAll());
-        model.addAttribute(new Report());   // for submitting a report on this page
+        model.addAttribute(new Report());
         return "map";
     }
 
@@ -70,7 +71,6 @@ public class MainController {
                                     Principal principal) {
 
         if (errors.hasErrors()) {
-            // display form again with errors
             model.addAttribute("title", "Add Report");
             return "map";
         }
@@ -82,7 +82,6 @@ public class MainController {
         User user = userDao.findByUsername(principal.getName());
         report.setUser(user);
         report.setLocation(myLocation);
-        // if no errors, save report
         reportDao.save(report);
 
         return "redirect:/report/" + report.getId();
@@ -92,6 +91,7 @@ public class MainController {
 
     @GetMapping(value = "report/{id}")
     public String displayOneReport(@PathVariable int id, Model model) {
+
         Report report = reportDao.findById(id);
         model.addAttribute("report", report);
         model.addAttribute("title", report.getTitle());
@@ -119,12 +119,10 @@ public class MainController {
         return "/reportList";
     }
 
-    // view reports by specific user
     @GetMapping(value = "report/list/{username}")
     public String displayReportListByUser(@PathVariable String username,
                                           Model model, HttpServletRequest request) {
 
-        // get requested user
         User user = userDao.findByUsername(username);
         if (user == null) {
             return "redirect:/report/list";
@@ -133,7 +131,6 @@ public class MainController {
         int pageNumber = getPageNumber(request);
         Pageable pageable = new PageRequest(pageNumber,3);
 
-        // get reports by this user
         Slice<Report> reportsSlice = reportDao.findAllByUser(user, pageable);
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("title", "All Reports by " + username);
@@ -146,21 +143,17 @@ public class MainController {
     public String displayEditReport(@PathVariable int id, Model model,
                                     Principal principal) {
 
-        // get current user and report to edit
         User user = userDao.findByUsername(principal.getName());
         Report report = reportDao.findById(id);
 
-        // check if report exists
         if (report == null) {
             return "redirect:/report/list";
         }
 
-        // check if user is eligible to edit report
         if (user != report.getUser()) {
             return "redirect:/unauthorized";
         }
 
-        // display edit report
         model.addAttribute("title", "Edit Report");
         model.addAttribute("report", report);
         return "editReport";
@@ -170,7 +163,6 @@ public class MainController {
     public String processEditReport(@PathVariable int id, Model model,
                                     @ModelAttribute @Valid Report report, Errors errors) {
 
-        // find original report to be edited
         Report origReport = reportDao.findById(id);
 
         if (errors.hasErrors()) {
@@ -181,20 +173,17 @@ public class MainController {
             if (errors.hasFieldErrors("description")) {
                 report.setDescription("");
             }
-            // display the edit-report-form again
+
             model.addAttribute("title", "Edit Report");
             return "editReport";
         }
 
-        // edit fields
         origReport.setTitle(report.getTitle());
         origReport.setDescription(report.getDescription());
         origReport.setUrgency(report.getUrgency());
 
-        // update field lastEdit to keep track of when this was edited
         origReport.setLastEdit(ZonedDateTime.now(ZoneId.systemDefault()));
 
-        // save edits
         reportDao.save(origReport);
 
         return "redirect:/report/" + id;
@@ -202,6 +191,7 @@ public class MainController {
 
     @GetMapping(value = "about")
     public String displayAboutPage(Model model) {
+
         model.addAttribute("title", "About Local Reports");
         return "about";
     }
@@ -227,7 +217,7 @@ public class MainController {
 
         // default values: if user clicked search btn but didn't change value
         if (sort.equals("")) {
-            sort = "zonedDateTime";
+            sort = "dateTime";
         }
 
         if (order.equals("desc")) {
@@ -239,25 +229,24 @@ public class MainController {
     // process sort button values, return Slice<Report>
     private Slice<Report> processSortButton(String sort, String order,
                                            HttpServletRequest request) {
+
         Pageable pageable;
         int pageNumber = getPageNumber(request);
 
         // default values: if user clicked search btn but didn't change values
         if (sort.equals("")) {
-            sort = "zonedDateTime";
+            sort = "dateTime";
         }
         if (order.equals("")) {
             order = "asc";
         }
 
-        // create pageable object w/ user-selected sort & order values
         if (order.equals("asc")) {
             pageable = new PageRequest(pageNumber, 3, new Sort(Sort.Direction.ASC, sort));
         } else {
             pageable = new PageRequest(pageNumber, 3, new Sort(Sort.Direction.DESC, sort));
         }
 
-        // get all reports, 3 per page
         return reportDao.findAll(pageable);
     }
 

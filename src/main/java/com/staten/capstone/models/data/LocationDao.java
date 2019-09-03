@@ -12,7 +12,7 @@ public interface LocationDao extends CrudRepository<Location, Integer> {
 
     public Location findById(int id);
 
-    public Location findByName(String name);
+    public Location findByLatLng(String latLng);
 
     @Override
     void delete(Location location);

@@ -48,7 +48,7 @@
                         <h4 class="card-title">
                             <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
                         </h4>
-                        <p th:text="${report.getFormattedZonedDateTime()}"></p>
+                        <p th:text="${report.getFormattedDateTime()}"></p>
                         <p th:text="${report.description}" class="card-text">Body</p>
                     </div>
                 </div>
