@@ -95,7 +95,7 @@ public class MainController {
         Report report = reportDao.findById(id);
         model.addAttribute("report", report);
         model.addAttribute("title", report.getTitle());
-        return "viewReport";
+        return "reports/viewReport";
     }
 
     @GetMapping(value = "report/list")
@@ -104,7 +104,7 @@ public class MainController {
         Slice<Report> reportsSlice = processSortButton("", "", request);
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("title", "All Reports");
-        return "/reportList";
+        return "reports/reportList";
     }
 
     @GetMapping(value = "report/list/sort")
@@ -116,7 +116,7 @@ public class MainController {
         model.addAttribute("sort", sort);
         model.addAttribute("order", order);
         model.addAttribute("title", "All Reports");
-        return "/reportList";
+        return "reports/reportList";
     }
 
     @GetMapping(value = "report/list/{username}")
@@ -135,7 +135,7 @@ public class MainController {
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("title", "All Reports by " + username);
         model.addAttribute("username", username);
-        return "/reportListByUser";
+        return "reports/reportListByUser";
     }
 
     // edit form - link only avail. when viewing own report list or indvdl report by user
@@ -156,7 +156,7 @@ public class MainController {
 
         model.addAttribute("title", "Edit Report");
         model.addAttribute("report", report);
-        return "editReport";
+        return "reports/editReport";
     }
 
     @PostMapping(value = "report/edit/{id}")
@@ -175,7 +175,7 @@ public class MainController {
             }
 
             model.addAttribute("title", "Edit Report");
-            return "editReport";
+            return "reports/editReport";
         }
 
         origReport.setTitle(report.getTitle());
