@@ -62,7 +62,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionFixation().migrateSession()
                     .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .maximumSessions(2)
-                    .expiredUrl("/expiredSession")
         ;
 
     }

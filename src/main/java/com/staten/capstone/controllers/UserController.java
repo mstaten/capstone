@@ -41,12 +41,7 @@ public class UserController {
     @GetMapping(value = "unauthorized")
     public String unauthorized(Model model) {
         model.addAttribute("title", "Unauthorized");
+        model.addAttribute("body", "You are not authorized to view this page.");
         return "user/unauthorized";
-    }
-
-    @GetMapping(value = "expiredSession")
-    public String expiredSession(Model model) {
-        model.addAttribute("title", "Expired Session");
-        return "user/expiredSession";
     }
 }
