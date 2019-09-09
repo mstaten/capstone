@@ -86,17 +86,26 @@
                 <div th:each="report : ${reportsSlice.getContent()}"
                      class="card border-primary mb-3 report"
                      style="width: 500px;">
+
                     <div class="card-header">
-                        <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
-                        <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
-                    </div>
-                    <div class="card-body">
-                    <h4 class="card-title">
                         <a th:text="${report.title}" th:href="@{'/report/' + ${report.id}}">Title</a>
-                    </h4>
-                    <p th:text="${report.getFormattedDateTime()}"></p>
-                    <p th:text="${report.description}" class="card-text">Body</p>
-                </div>
+                        <span class="float-right">
+                                Urgency level:
+                                <span th:text="${report.urgency}" class="urgency-level" id="rep-urgency">Urgency</span>
+                            </span>
+                        <span th:text="${report.id}" id="rep-id" hidden="true"></span>
+                    </div>
+
+                    <div class="card-body">
+                        <p>
+                            <span th:text="${report.getFormattedDateTime()}"></span>
+                            <em class="float-right">by
+                                <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                            </em>
+                        </p>
+                        <p th:text="${report.location.latLng}" hidden="hidden"></p>
+                        <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
+                    </div>
                 </div>
             </div>
         </div>

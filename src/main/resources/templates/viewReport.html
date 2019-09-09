@@ -21,12 +21,20 @@
                 <div>
                     <div class="card border-primary mb-3 report" style="width: 500px;">
                         <div class="card-header">
-                            <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
-                            <span class="float-right">Urgency level: <span th:text="${report.urgency}" class="urgency-level">Urgency</span></span>
+                            <span th:text="${report.title}">Title</span>
+                            <span class="float-right">
+                                Urgency level:
+                                <span th:text="${report.urgency}" class="urgency-level" id="rep-urgency">Urgency</span>
+                            </span>
+                            <span th:text="${report.id}" id="rep-id" hidden="true"></span>
                         </div>
                         <div class="card-body">
-                            <h4 th:text="${report.title}" class="card-title">Title</h4>
-                            <p th:text="${report.getFormattedDateTime()}"></p>
+                            <p>
+                                <span th:text="${report.getFormattedDateTime()}"></span>
+                                <em class="float-right">by
+                                    <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                                </em>
+                            </p>
                             <p hidden="hidden"><span id="location" th:text="${report.location.latLng}"></span></p>
                             <p th:text="${report.description}" class="card-text">Body</p>
                             <p th:if="${report.lastEdit}">Updated: <span th:text="${report.getFormattedLastEdit()}"></span></p>
@@ -59,7 +67,7 @@ function createMap() {
     var origin = {lat: convertedLatLng.lat, lng: convertedLatLng.lng};
     var options = {
         center: origin,
-        zoom: 14
+        zoom: 18
     };
 
     map = new google.maps.Map(document.getElementById('map'), options);

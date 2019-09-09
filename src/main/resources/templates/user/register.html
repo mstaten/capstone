@@ -9,13 +9,16 @@
     </div>
 
     <div class="main general">
+
         <h1 th:text="${title}" class="title center">Default Title</h1>
 
-        <div class="contents">
+        <div class="">
 
-            <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}">binding result - show localized message</p>
+            <div class="center">
+                <p th:if="${ex}" th:text="${ex.getLocalizedMessage()}" class="invalid-feedback error center">binding result - show localized message</p>
+            </div>
 
-            <form method="post" th:object="${userDto}">
+            <form method="post" th:object="${userDto}" class="contents">
                 <fieldset>
                     <div class="form-group">
                         <label for="username">Username</label>

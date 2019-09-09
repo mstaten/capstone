@@ -90,7 +90,12 @@
 
                         <!-- report body -->
                         <div class="report-body">
-                            <p th:text="${report.getFormattedDateTime()}" class="dateTime"></p>
+                            <p>
+                                <span th:text="${report.getFormattedDateTime()}"></span>
+                                <em class="float-right">by
+                                    <a th:text="${report.user.username}" th:href="@{'/report/list/' + ${report.user.username}}">User</a>
+                                </em>
+                            </p>
                             <p th:text="${report.location.latLng}" hidden="hidden"></p>
                             <p th:text="${report.description}" class="card-text" id="rep-body">Body</p>
                         </div>
