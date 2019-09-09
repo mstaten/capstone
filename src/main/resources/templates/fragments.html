@@ -24,7 +24,7 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="/" class="navbar-brand lr-logo">LR</a>
+            <span class="navbar-brand lr-logo">LR</span>
         </span>
         <a class="navbar-brand" href="/report/list">Local Reports</a>
 
@@ -56,31 +56,6 @@
         </div>
 
     </nav>
-
-
-    <div th:fragment="user-info" sec:authorize="isAuthenticated()" class="user-info">
-        <!-- User-Info Popover -->
-        <a class="btn btn-warning" data-placement="top"
-           data-popover-content="#a1" data-toggle="popover"
-           data-trigger="focus" href="#"
-           sec:authentication="name">username</a>
-
-        <!-- Content for User-Info Popover -->
-        <div class="hidden" id="a1">
-            <div class="popover-heading" hidden="true">
-                <a th:href="'/account/' + ${#authentication.getPrincipal().getId()}">My Account</a>
-            </div>
-
-            <div class="popover-body" hidden="true">
-                <a href="/">Home</a>
-            </div>
-        </div>
-    </div>
-
-    <div th:fragment="auth2" class="general">
-        <div sec:authorize="!isAuthenticated()">Text for non-authenticated users.</div>
-        <div sec:authorize="isAuthenticated()">Text for authenticated users.</div>
-    </div>
 
     <div th:fragment="script">
         <!-- Bootstrap scripts -->

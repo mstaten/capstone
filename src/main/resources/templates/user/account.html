@@ -9,6 +9,7 @@
     </div>
 
     <div class="main general center">
+
         <h1 th:text="${title}" class="title">Default Title</h1>
 
         <div>
@@ -17,12 +18,12 @@
             </h3>
 
             <div class="my-link">
-                    <a th:href="@{'/report/list/' + ${#authentication.getPrincipal().getUsername()}}" class="text-warning">View My Reports</a>
+                <a th:href="@{'/report/list/' + ${#authentication.getPrincipal().getUsername()}}" class="text-warning">View My Reports</a>
             </div>
 
             <div class="my-link">
-                <a href="/logout" class="text-danger" >Logout
-                    <form th:action="@{/user/logout}" method="post" th:hidden="true"  >
+                <a href="/logout" class="text-danger">Logout
+                    <form th:action="@{/user/logout}" method="post" th:hidden="true">
                         <input type="submit" value="Logout"/>
                     </form>
                 </a>
