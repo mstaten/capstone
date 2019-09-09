@@ -39,7 +39,7 @@ public class MainController {
     public String index(Model model) {
 
         model.addAttribute("title", "Local Reports");
-        return "index";
+        return "redirect:/localreports";
     }
 
     @GetMapping(value = "localreports")
