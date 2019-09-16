@@ -66,13 +66,11 @@ public class MainController {
 
     @PostMapping(value = "submitreport")
     public String processReportForm(@ModelAttribute @Valid Report report,
-                                    Errors errors, Model model,
-                                    @RequestParam String newLocation,
-                                    Principal principal) {
+                                    Errors errors, Principal principal,
+                                    @RequestParam String newLocation) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Report");
-            return "map";
+            return "redirect:/localreports";
         }
 
         Location myLocation = new Location();

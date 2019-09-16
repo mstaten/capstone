@@ -8,6 +8,11 @@
     font-size: 1em;
 }
 
+/* full-screen */
+.main, .nav-bar, .map-nav-bar, .fill-container {
+    width: 100%;
+}
+
 .wrapper {
     display: grid;
     position: relative;
@@ -25,12 +30,10 @@
 /* grid areas */
 .nav-bar {
     grid-area: nav;
-    width: 100%;
 }
 
 .main {
     grid-area: main;
-    width: 100%;
 }
 
 .footer {
@@ -53,33 +56,7 @@
     margin: 20px;
 }
 
-.images {
-    grid-area: 2 / 2 / span 4 / span 2;
-}
-
-img {
-    max-width: 600px;
-    height: auto;
-}
-
-.image1 {
-    z-index: 5;
-    max-width: 600px;
-    height: auto;
-}
-
-.image2 {
-    grid-area: 3 / 3 / span 1 / span 1;
-    max-width: 500px;
-    height: auto;
-}
-
-
-.center {
-    text-align: center;
-}
-
-.title {
+.center, .title {
     text-align: center;
 }
 
@@ -167,7 +144,6 @@ img {
     display: flex;
     justify-content: space-between;
     height: 50px;
-    width: 100%;
 }
 
 .map-nav-btn {
@@ -220,10 +196,6 @@ nav.nav-tabs {
     overflow: scroll;
 }
 
-.fill-container {
-    width: 100%;
-}
-
 .fill-container input, .fill-container textarea, .fill-container select {
     margin: 5px;
 }
@@ -261,9 +233,6 @@ textarea.form-control {
     border-color: rgb(247, 247, 249);
     border-radius: 0px !important;
     background-color: rgb(247, 247, 249);
-}
-.no-border select {
-
 }
 
 .map-ol {
@@ -393,12 +362,8 @@ textarea.form-control {
 .form-group {
     margin: 0px 10px;
 }
-
 /* styles for one-report page */
 .flexit {
     display: flex;
     justify-content: center;
-}
-
-.reports, .account {
 }
