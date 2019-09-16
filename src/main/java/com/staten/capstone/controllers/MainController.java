@@ -133,7 +133,7 @@ public class MainController {
         model.addAttribute("reportsSlice", reportsSlice);
         model.addAttribute("title", "All Reports by " + username);
         model.addAttribute("username", username);
-        return "reports/reportListByUser";
+        return "reports/reportList";
     }
 
     // edit form - link only avail. when viewing own report list or indvdl report by user
